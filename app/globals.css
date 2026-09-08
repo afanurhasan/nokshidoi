@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #FF8904;
+    --color-primary-hover: #E07400;
+    --color-brand-orange: #FF8904;
+
+    /* Override default greens with MustBuy's signature brand orange palette */
+    --color-green-50: #FFF7ED;
+    --color-green-100: #FFEDD5;
+    --color-green-200: #FED7AA;
+    --color-green-300: #FDBA74;
+    --color-green-400: #FB923C;
+    --color-green-500: #FF8904;
+    --color-green-600: #F97316;
+    --color-green-700: #EA580C;
+    --color-green-800: #C2410C;
+    --color-green-900: #9A3412;
+}
+
+:root {
+    --primary-color: #FF8904;
+    --primary-hover: #E07400;
+}
+
+@layer components {
+    @keyframes marqueeScroll {
+        0% {
+            transform: translateX(0%);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+}
+
+@layer base {
+    button {
+        cursor: pointer;
+    }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
