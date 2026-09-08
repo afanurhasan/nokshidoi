@@ -12,7 +12,7 @@ import { Mail, ShoppingBag, RefreshCw } from "lucide-react";
 
 export default function Orders() {
     const dispatch = useDispatch();
-    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+    const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'https://mustbuy.srv1073421.hstgr.cloud').replace(/\/$/, '');
     const orders = useSelector(state => state.order.list) || [];
     const { user } = useSelector(state => state.auth);
 

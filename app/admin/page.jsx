@@ -15,7 +15,7 @@ import { GET_ORDERS } from "@/lib/graphql/queries";
 
 export default function AdminDashboard() {
     const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$';
-    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+    const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'https://mustbuy.srv1073421.hstgr.cloud').replace(/\/$/, '');
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(true);

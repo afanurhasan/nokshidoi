@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 
 export default function AdminOrdersPage() {
     const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$';
-    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+    const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'https://mustbuy.srv1073421.hstgr.cloud').replace(/\/$/, '');
     const dispatch = useDispatch();
 
     const [orders, setOrdersState] = useState([]);
