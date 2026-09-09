@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { getStrapiUrl } from '@/lib/strapi';
 
 export async function POST(request) {
   try {
@@ -9,7 +10,7 @@ export async function POST(request) {
     }
 
     const cleanCode = code.trim().toUpperCase();
-    const strapiBase = (process.env.NEXT_PUBLIC_STRAPI_URL || 'https://mustbuy.srv1073421.hstgr.cloud').replace(/\/$/, '');
+    const strapiBase = getStrapiUrl();
 
     let matchedCoupon = null;
 

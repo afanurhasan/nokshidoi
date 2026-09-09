@@ -8,11 +8,12 @@ import InvoiceModal from '@/components/InvoiceModal';
 import { FileText, Search, Mail, Phone, MapPin, User, RefreshCw } from 'lucide-react';
 import { useQuery } from '@apollo/client/react';
 import { GET_ORDERS } from '@/lib/graphql/queries';
+import { getStrapiUrl } from '@/lib/strapi';
 import toast from 'react-hot-toast';
 
 export default function AdminOrdersPage() {
     const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$';
-    const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'https://mustbuy.srv1073421.hstgr.cloud').replace(/\/$/, '');
+    const strapiUrl = getStrapiUrl();
     const dispatch = useDispatch();
 
     const [orders, setOrdersState] = useState([]);

@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useQuery } from "@apollo/client/react";
 import { GET_PRODUCTS, GET_CATEGORIES } from "@/lib/graphql/queries";
 import { setProduct } from "@/lib/features/product/productSlice";
+import { getStrapiUrl } from "@/lib/strapi";
 
 function ShopContent() {
     const searchParams = useSearchParams();
@@ -34,7 +35,7 @@ function ShopContent() {
 
     // Direct REST API fallback in case GraphQL is blocked or warming up
     useEffect(() => {
-        const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337').replace(/\/$/, '');
+        const strapiUrl = getStrapiUrl();
         fetch(`${strapiUrl}/api/products?populate=*`)
             .then(r => r.json())
             .then(json => {

@@ -9,10 +9,11 @@ import { GET_ORDERS } from "@/lib/graphql/queries";
 import { setOrders } from "@/lib/features/order/orderSlice";
 import Link from "next/link";
 import { Mail, ShoppingBag, RefreshCw } from "lucide-react";
+import { getStrapiUrl } from "@/lib/strapi";
 
 export default function Orders() {
     const dispatch = useDispatch();
-    const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'https://mustbuy.srv1073421.hstgr.cloud').replace(/\/$/, '');
+    const strapiUrl = getStrapiUrl();
     const orders = useSelector(state => state.order.list) || [];
     const { user } = useSelector(state => state.auth);
 

@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 import { useQuery } from '@apollo/client/react';
 import { GET_LANDING_PAGE } from '@/lib/graphql/queries';
 
+import { getStrapiUrl } from '@/lib/strapi';
+
 const getGridColsClass = (columns) => {
     switch (Number(columns)) {
         case 2:
@@ -35,7 +37,7 @@ const DynamicProductSections = ({ sections: propSections }) => {
 
     useEffect(() => {
         if (!sections || sections.length === 0) {
-            const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337').replace(/\/$/, '');
+            const strapiUrl = getStrapiUrl();
             fetch(`${strapiUrl}/api/landing-page?populate[productSections][populate][products][populate]=*`)
                 .then(r => r.json())
                 .then(json => {

@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useQuery } from "@apollo/client/react";
 import { GET_PRODUCTS } from "@/lib/graphql/queries";
+import { getStrapiUrl } from "@/lib/strapi";
 
 export default function Product() {
     const { productId } = useParams();
@@ -21,7 +22,7 @@ export default function Product() {
     });
 
     useEffect(() => {
-        const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337').replace(/\/$/, '');
+        const strapiUrl = getStrapiUrl();
         fetch(`${strapiUrl}/api/products?populate=*`)
             .then(r => r.json())
             .then(json => {

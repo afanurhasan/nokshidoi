@@ -9,6 +9,7 @@ import LatestProducts from "@/components/LatestProducts";
 import DynamicProductSections from "@/components/DynamicProductSections";
 import { useQuery } from "@apollo/client/react";
 import { GET_LANDING_PAGE } from "@/lib/graphql/queries";
+import { getStrapiUrl } from "@/lib/strapi";
 
 export default function Home() {
     const { data } = useQuery(GET_LANDING_PAGE, { 
@@ -20,7 +21,7 @@ export default function Home() {
 
     // Direct Strapi REST fallback to guarantee live updates even if Apollo cache hasn't invalidated
     useEffect(() => {
-        const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337').replace(/\/$/, '');
+        const strapiUrl = getStrapiUrl();
         fetch(`${strapiUrl}/api/landing-page?populate[productSections][populate][products][populate]=*`)
             .then(res => res.json())
             .then(json => {

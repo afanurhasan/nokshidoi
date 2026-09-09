@@ -12,10 +12,11 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { useQuery } from "@apollo/client/react";
 import { GET_ORDERS, GET_PRODUCTS } from "@/lib/graphql/queries";
+import { getStrapiUrl } from "@/lib/strapi";
 
 export default function AdminDashboard() {
     const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$';
-    const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'https://mustbuy.srv1073421.hstgr.cloud').replace(/\/$/, '');
+    const strapiUrl = getStrapiUrl();
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(true);
@@ -251,7 +252,7 @@ export default function AdminDashboard() {
             {/* Orders Area Chart */}
             <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
                 <h3 className="text-base font-bold text-slate-800 mb-4">Sales & Order Volume</h3>
-                <OrdersAreaChart allOrders={dummyAdminDashboardData.allOrders} />
+                <OrdersAreaChart allOrders={orders} />
             </div>
 
             {/* Invoice Modal */}

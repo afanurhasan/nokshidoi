@@ -38,7 +38,7 @@ export async function POST(request) {
     const buffer = Buffer.from(bytes);
 
     // Try forwarding to Strapi if STRAPI_URL and admin/api token is available
-    const strapiBase = process.env.NEXT_PUBLIC_STRAPI_API_URL || process.env.STRAPI_URL;
+    const strapiBase = process.env.NEXT_PUBLIC_STRAPI_API_URL || process.env.NEXT_PUBLIC_STRAPI_URL || process.env.STRAPI_URL;
     const strapiToken = process.env.STRAPI_ADMIN_TOKEN || process.env.STRAPI_API_TOKEN;
 
     if (strapiBase && strapiToken) {
