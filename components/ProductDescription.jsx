@@ -51,7 +51,7 @@ const ProductDescription = ({ product }) => {
 
                 {/* Store Guarantee */}
                 <div className="pt-2 text-xs text-slate-500">
-                    <p>Sold & Fulfilled by <span className="font-semibold text-slate-700">{product.storeName || product.store?.name || 'GoCart Official'}</span></p>
+                    <p>Sold & Fulfilled by <span className="font-semibold text-slate-700">{product.storeName || product.store?.name || 'MustBuy Official'}</span></p>
                 </div>
             </div>
         </div>

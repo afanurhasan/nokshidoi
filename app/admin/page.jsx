@@ -1,17 +1,17 @@
 'use client';
 
-import { dummyAdminDashboardData } from "@/assets/assets";
 import Loading from "@/components/Loading";
 import OrdersAreaChart from "@/components/OrdersAreaChart";
 import { CircleDollarSignIcon, ShoppingBasketIcon, TagsIcon, FileText, ArrowRight, PackageCheck, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateOrderStatus, setOrders } from "@/lib/features/order/orderSlice";
+import { restoreStock, setProduct } from "@/lib/features/product/productSlice";
 import InvoiceModal from "@/components/InvoiceModal";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useQuery } from "@apollo/client/react";
-import { GET_ORDERS } from "@/lib/graphql/queries";
+import { GET_ORDERS, GET_PRODUCTS } from "@/lib/graphql/queries";
 
 export default function AdminDashboard() {
     const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$';
@@ -22,14 +22,24 @@ export default function AdminDashboard() {
     const [selectedOrderForInvoice, setSelectedOrderForInvoice] = useState(null);
     const [isRefreshing, setIsRefreshing] = useState(false);
 
-    // 1. Apollo GraphQL Query
+    // 1. Apollo GraphQL Queries for real database records
     const { data: gqlData, refetch: refetchGql } = useQuery(GET_ORDERS, {
+        fetchPolicy: 'network-only',
+        errorPolicy: 'ignore',
+    });
+    const { data: gqlProds } = useQuery(GET_PRODUCTS, {
         fetchPolicy: 'network-only',
         errorPolicy: 'ignore',
     });
 
     const orders = useSelector(state => state.order.list) || [];
     const products = useSelector(state => state.product.list) || [];
+
+    useEffect(() => {
+        if (gqlProds?.products && gqlProds.products.length > 0) {
+            dispatch(setProduct(gqlProds.products));
+        }
+    }, [gqlProds, dispatch]);
 
     // Fetch real orders directly from Strapi REST API
     const fetchLiveOrders = async () => {
@@ -64,7 +74,7 @@ export default function AdminDashboard() {
     const pendingOrdersCount = orders.filter(o => (o.orderStatus || o.status || 'pending').toLowerCase() === 'pending').length;
 
     const dashboardCardsData = [
-        { title: 'Total Products', value: products.length || 8, icon: ShoppingBasketIcon },
+        { title: 'Total Products', value: products.length || 0, icon: ShoppingBasketIcon },
         { title: 'Total Revenue', value: `${currency}${totalRevenue.toLocaleString()}`, icon: CircleDollarSignIcon },
         { title: 'Total Orders', value: orders.length || 0, icon: TagsIcon },
         { title: 'Pending Orders', value: pendingOrdersCount, icon: PackageCheck },
@@ -75,6 +85,15 @@ export default function AdminDashboard() {
 
         // 1. Optimistic update in Redux
         dispatch(updateOrderStatus({ orderId: targetDocId, status: newStatus }));
+
+        // Restore inventory stock if cancelled
+        if (newStatus === 'cancelled') {
+            const itemsToRestore = order.orderItems || order.items || [];
+            if (itemsToRestore.length > 0) {
+                dispatch(restoreStock({ items: itemsToRestore }));
+                toast.success('Inventory stock restored for cancelled order');
+            }
+        }
 
         // 2. Persist update directly to Strapi Database
         try {
@@ -119,7 +138,7 @@ export default function AdminDashboard() {
                         Admin <span className="text-green-600 font-semibold">Dashboard</span>
                     </h1>
                     <p className="text-xs text-slate-400 mt-1">
-                        Real-time overview of GoCart store performance, revenue, and customer orders
+                        Real-time overview of MustBuy store performance, revenue, and customer orders
                     </p>
                 </div>
                 <button

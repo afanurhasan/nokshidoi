@@ -18,24 +18,63 @@ function ShopContent() {
 
     const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
-    // Fetch from GraphQL
-    const { data: productsData } = useQuery(GET_PRODUCTS, { errorPolicy: 'ignore' });
-    const { data: categoriesData } = useQuery(GET_CATEGORIES, { errorPolicy: 'ignore' });
+    // Fetch from GraphQL with cache-and-network policy
+    const { data: productsData } = useQuery(GET_PRODUCTS, { 
+        fetchPolicy: 'cache-and-network',
+        errorPolicy: 'ignore' 
+    });
+    const { data: categoriesData } = useQuery(GET_CATEGORIES, { 
+        fetchPolicy: 'cache-and-network',
+        errorPolicy: 'ignore' 
+    });
 
     const storeProducts = useSelector(state => state.product.list);
+    const [restProducts, setRestProducts] = useState([]);
+    const [restCategories, setRestCategories] = useState([]);
 
-    // Sync fetched products to Redux store
+    // Direct REST API fallback in case GraphQL is blocked or warming up
+    useEffect(() => {
+        const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337').replace(/\/$/, '');
+        fetch(`${strapiUrl}/api/products?populate=*`)
+            .then(r => r.json())
+            .then(json => {
+                const list = json?.data;
+                if (Array.isArray(list) && list.length > 0) {
+                    setRestProducts(list);
+                    dispatch(setProduct(list));
+                }
+            })
+            .catch(() => {});
+
+        fetch(`${strapiUrl}/api/categories?populate=*`)
+            .then(r => r.json())
+            .then(json => {
+                const list = json?.data;
+                if (Array.isArray(list) && list.length > 0) {
+                    setRestCategories(list);
+                }
+            })
+            .catch(() => {});
+    }, [dispatch]);
+
+    // Sync fetched GraphQL products to Redux store
     useEffect(() => {
         if (productsData?.products?.length > 0) {
             dispatch(setProduct(productsData.products));
         }
     }, [productsData, dispatch]);
 
-    const products = productsData?.products?.length > 0 ? productsData.products : storeProducts;
+    const products = productsData?.products?.length > 0
+        ? productsData.products
+        : (storeProducts?.length > 0 ? storeProducts : restProducts);
+
+    const rawCategories = categoriesData?.categories?.length > 0
+        ? categoriesData.categories
+        : restCategories;
 
     // Available categories (combine from GraphQL and fallback)
-    const categoryList = categoriesData?.categories?.length > 0
-        ? ['All', ...categoriesData.categories.map(c => c.name)]
+    const categoryList = rawCategories?.length > 0
+        ? ['All', ...rawCategories.map(c => c.name)]
         : ['All', 'Headphones', 'Speakers', 'Watch', 'Earbuds', 'Mouse', 'Decoration'];
 
     // Filter by search & category

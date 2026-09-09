@@ -148,7 +148,7 @@ const InvoiceModal = ({ order, isOpen, onClose }) => {
 
                     {/* Footer note */}
                     <div className="text-center pt-6 border-t border-slate-100 text-[11px] text-slate-400">
-                        <p>Thank you for shopping with GoCart! For customer support, contact support@gocart.com</p>
+                        <p>Thank you for shopping with MustBuy! For customer support, contact support@mustbuy.com.bd</p>
                     </div>
                 </div>
             </div>

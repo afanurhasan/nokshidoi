@@ -2,6 +2,7 @@
 
 import ProductDescription from "@/components/ProductDescription";
 import ProductDetails from "@/components/ProductDetails";
+import RelatedProducts from "@/components/RelatedProducts";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -11,10 +12,30 @@ import { GET_PRODUCTS } from "@/lib/graphql/queries";
 export default function Product() {
     const { productId } = useParams();
     const [product, setProduct] = useState(null);
+    const [restProducts, setRestProducts] = useState([]);
     const reduxProducts = useSelector(state => state.product.list);
 
-    const { data } = useQuery(GET_PRODUCTS, { errorPolicy: 'ignore' });
-    const allProducts = data?.products?.length > 0 ? data.products : reduxProducts;
+    const { data } = useQuery(GET_PRODUCTS, { 
+        fetchPolicy: 'cache-and-network',
+        errorPolicy: 'ignore' 
+    });
+
+    useEffect(() => {
+        const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337').replace(/\/$/, '');
+        fetch(`${strapiUrl}/api/products?populate=*`)
+            .then(r => r.json())
+            .then(json => {
+                const list = json?.data;
+                if (Array.isArray(list) && list.length > 0) {
+                    setRestProducts(list);
+                }
+            })
+            .catch(() => {});
+    }, []);
+
+    const allProducts = data?.products?.length > 0 
+        ? data.products 
+        : (reduxProducts?.length > 0 ? reduxProducts : restProducts);
 
     useEffect(() => {
         if (allProducts && allProducts.length > 0) {
@@ -45,6 +66,7 @@ export default function Product() {
                     <>
                         <ProductDetails product={product} />
                         <ProductDescription product={product} />
+                        <RelatedProducts currentProduct={product} allProducts={allProducts} />
                     </>
                 ) : (
                     <div className="min-h-[50vh] flex items-center justify-center text-slate-400">

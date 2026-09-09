@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Title from './Title';
 import ProductCard from './ProductCard';
 import { useSelector } from 'react-redux';
@@ -23,12 +23,30 @@ const getGridColsClass = (columns) => {
     }
 };
 
-const DynamicProductSections = () => {
+const DynamicProductSections = ({ sections: propSections }) => {
     const storeProducts = useSelector(state => state.product.list);
-    const { data } = useQuery(GET_LANDING_PAGE, { errorPolicy: 'ignore' });
-    const lp = data?.landingPage;
+    const { data } = useQuery(GET_LANDING_PAGE, { 
+        fetchPolicy: 'cache-and-network',
+        errorPolicy: 'ignore' 
+    });
+    const [restSections, setRestSections] = useState(null);
 
-    const sections = lp?.productSections;
+    const sections = propSections || data?.landingPage?.productSections || restSections;
+
+    useEffect(() => {
+        if (!sections || sections.length === 0) {
+            const strapiUrl = (process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337').replace(/\/$/, '');
+            fetch(`${strapiUrl}/api/landing-page?populate[productSections][populate][products][populate]=*`)
+                .then(r => r.json())
+                .then(json => {
+                    const sec = json?.data?.productSections;
+                    if (Array.isArray(sec) && sec.length > 0) {
+                        setRestSections(sec);
+                    }
+                })
+                .catch(() => {});
+        }
+    }, [sections]);
 
     // If repeatable sections are configured in Strapi
     if (sections && Array.isArray(sections) && sections.length > 0) {

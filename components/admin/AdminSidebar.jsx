@@ -1,5 +1,3 @@
-'use client';
-
 import { usePathname } from "next/navigation";
 import { HomeIcon, PackageCheck } from "lucide-react";
 import Image from "next/image";

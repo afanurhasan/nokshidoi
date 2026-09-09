@@ -17,10 +17,15 @@ const Navbar = () => {
     const [search, setSearch] = useState('');
     const [showAuthModal, setShowAuthModal] = useState(false);
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+    const [mounted, setMounted] = useState(false);
     const dropdownRef = useRef(null);
 
     const cartCount = useSelector(state => state.cart.total);
     const { user, isAuthenticated } = useSelector(state => state.auth);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -91,7 +96,7 @@ const Navbar = () => {
                             )}
                         </Link>
 
-                        {isAuthenticated ? (
+                        {mounted && isAuthenticated ? (
                             <div className="relative" ref={dropdownRef}>
                                 <button
                                     onClick={() => setShowProfileDropdown(!showProfileDropdown)}
@@ -164,7 +169,7 @@ const Navbar = () => {
                                 </span>
                             )}
                         </Link>
-                        {isAuthenticated ? (
+                        {mounted && isAuthenticated ? (
                             <div className="flex items-center gap-2">
                                 <Link
                                     href="/orders"

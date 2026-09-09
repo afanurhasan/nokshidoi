@@ -42,21 +42,21 @@ export const dummyRatingsData = [
 export const dummyStoreData = {
     id: "store_1",
     userId: "user_1",
-    name: "Happy Shop",
-    description: "At Happy Shop, we believe shopping should be simple, smart, and satisfying. Whether you're hunting for the latest fashion trends, top-notch electronics, home essentials, or unique lifestyle products — we've got it all under one digital roof.",
-    username: "happyshop",
-    address: "3rd Floor, Happy Shop , New Building, 123 street , c sector , NY, US",
+    name: "MustBuy Official",
+    description: "Official MustBuy Store offering curated genuine lifestyle and electronic gadgets.",
+    username: "mustbuy",
+    address: "House 12, Road 5, Dhanmondi, Dhaka - 1205, Bangladesh",
     status: "approved",
     isActive: true,
     logo: happy_store,
-    email: "happyshop@example.com",
-    contact: "+0 1234567890",
+    email: "support@mustbuy.com.bd",
+    contact: "+880 1700-000000",
     createdAt: "2025-09-04T09:04:16.189Z",
     updatedAt: "2025-09-04T09:04:44.273Z",
     user: {
         id: "user_31dOriXqC4TATvc0brIhlYbwwc5",
-        name: "Great Stack",
-        email: "user.greatstack@gmail.com",
+        name: "MustBuy Admin",
+        email: "support@mustbuy.com.bd",
         image: gs_logo,
     }
 }
@@ -253,15 +253,15 @@ export const ourSpecsData = [
 export const addressDummyData = {
     id: "addr_1",
     userId: "user_1",
-    name: "John Doe",
-    email: "johndoe@example.com",
-    street: "123 Main St",
-    city: "New York",
-    state: "NY",
-    zip: "10001",
-    country: "USA",
-    phone: "1234567890",
-    createdAt: 'Sat Jul 19 2025 14:51:25 GMT+0530 (India Standard Time)',
+    name: "Mehedi Hasan",
+    email: "customer@mustbuy.com.bd",
+    street: "House 12, Road 5, Dhanmondi",
+    city: "Dhaka",
+    state: "Dhaka",
+    zip: "1205",
+    country: "Bangladesh",
+    phone: "+880 1712-345678",
+    createdAt: 'Sat Jul 19 2025 14:51:25 GMT+0600 (Bangladesh Standard Time)',
 }
 
 export const couponDummyData = [
@@ -274,8 +274,8 @@ export const couponDummyData = [
 
 export const dummyUserData = {
     id: "user_31dQbH27HVtovbs13X2cmqefddM",
-    name: "GreatStack",
-    email: "greatstack@example.com",
+    name: "MustBuy Customer",
+    email: "customer@mustbuy.com.bd",
     image: gs_logo,
     cart: {}
 }
@@ -286,15 +286,15 @@ export const storesDummyData = [
     {
         id: "cmemkb98v0001tat8r1hiyxhn",
         userId: "user_31dOriXqC4TATvc0brIhlYbwwc5",
-        name: "GreatStack",
-        description: "GreatStack is the education marketplace where you can buy goodies related to coding and tech",
-        username: "greatstack",
-        address: "123 Maplewood Drive Springfield, IL 62704 USA",
+        name: "MustBuy Official",
+        description: "Official MustBuy Store offering curated genuine lifestyle and electronic gadgets.",
+        username: "mustbuy",
+        address: "House 12, Road 5, Dhanmondi, Dhaka - 1205, Bangladesh",
         status: "approved",
         isActive: true,
         logo: gs_logo,
-        email: "greatstack@example.com",
-        contact: "+0 1234567890",
+        email: "support@mustbuy.com.bd",
+        contact: "+880 1700-000000",
         createdAt: "2025-08-22T08:22:16.189Z",
         updatedAt: "2025-08-22T08:22:44.273Z",
         user: dummyUserData,

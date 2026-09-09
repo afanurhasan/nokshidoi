@@ -73,10 +73,10 @@ const AuthModal = ({ isOpen, onClose }) => {
                 </button>
 
                 <h2 className="text-2xl font-bold text-slate-800 text-center mb-1">
-                    {isLogin ? 'Welcome to GoCart' : 'Create an Account'}
+                    {isLogin ? 'Welcome to MustBuy' : 'Create an Account'}
                 </h2>
                 <p className="text-sm text-slate-500 text-center mb-6">
-                    {isLogin ? 'Sign in to access your orders and checkout faster' : 'Join GoCart to save orders and track shipments'}
+                    {isLogin ? 'Sign in to access your orders and checkout faster' : 'Join MustBuy to save orders and track shipments'}
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">

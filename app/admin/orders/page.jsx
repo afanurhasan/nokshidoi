@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateOrderStatus, setOrders } from '@/lib/features/order/orderSlice';
+import { restoreStock } from '@/lib/features/product/productSlice';
 import InvoiceModal from '@/components/InvoiceModal';
 import { FileText, Search, Mail, Phone, MapPin, User, RefreshCw } from 'lucide-react';
 import { useQuery } from '@apollo/client/react';
@@ -90,6 +91,15 @@ export default function AdminOrdersPage() {
 
         // 2. Update Redux store
         dispatch(updateOrderStatus({ orderId: targetDocId, status: newStatus }));
+
+        // If cancelled, restore stock for products
+        if (newStatus === 'cancelled') {
+            const itemsToRestore = order.orderItems || order.items || [];
+            if (itemsToRestore.length > 0) {
+                dispatch(restoreStock({ items: itemsToRestore }));
+                toast.success('Inventory stock restored for cancelled order');
+            }
+        }
 
         // 3. Persist update to Strapi Database
         try {

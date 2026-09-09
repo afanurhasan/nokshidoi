@@ -1,6 +1,6 @@
 'use client';
 
-import { User, Mail, Phone, MapPin, Truck, CheckCircle2, Eye, X, ArrowLeft, ShoppingBag } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Truck, CheckCircle2, Eye, X, ArrowLeft, ShoppingBag, Tag } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
@@ -10,6 +10,7 @@ import { CREATE_ORDER } from '@/lib/graphql/mutations';
 import { clearCart } from '@/lib/features/cart/cartSlice';
 import { addOrder } from '@/lib/features/order/orderSlice';
 import { setCredentials } from '@/lib/features/auth/authSlice';
+import { decrementStock } from '@/lib/features/product/productSlice';
 
 const OrderSummary = ({ totalPrice, items }) => {
     const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$';
@@ -32,6 +33,55 @@ const OrderSummary = ({ totalPrice, items }) => {
 
     // Modal state for order review
     const [showReviewModal, setShowReviewModal] = useState(false);
+
+    // Coupon states
+    const [couponInput, setCouponInput] = useState('');
+    const [appliedCoupon, setAppliedCoupon] = useState(null);
+    const [couponLoading, setCouponLoading] = useState(false);
+
+    const handleApplyCoupon = async (e) => {
+        if (e) e.preventDefault();
+        if (!couponInput.trim()) {
+            toast.error("Please enter a coupon code");
+            return;
+        }
+
+        setCouponLoading(true);
+        try {
+            const res = await fetch('/api/coupons/validate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    code: couponInput.trim(),
+                    items: items || [],
+                    subtotal: totalPrice,
+                }),
+            });
+
+            const data = await res.json();
+            if (!res.ok) {
+                toast.error(data.error || "Invalid coupon code");
+                return;
+            }
+
+            setAppliedCoupon(data);
+            toast.success(`Coupon "${data.code}" applied! Saved ${currency}${data.discountAmount.toLocaleString()}`);
+        } catch (err) {
+            console.error(err);
+            toast.error("Could not validate coupon. Please try again.");
+        } finally {
+            setCouponLoading(false);
+        }
+    };
+
+    const handleRemoveCoupon = () => {
+        setAppliedCoupon(null);
+        setCouponInput('');
+        toast.success("Coupon removed");
+    };
+
+    const discountAmount = appliedCoupon ? appliedCoupon.discountAmount : 0;
+    const finalPayable = Math.max(0, totalPrice - discountAmount);
 
     // Populate user details if logged in
     useEffect(() => {
@@ -105,7 +155,9 @@ const OrderSummary = ({ totalPrice, items }) => {
                 price: Number(item.price) || 0,
                 quantity: item.quantity || 1,
             })),
-            total: totalPrice,
+            total: finalPayable,
+            couponCode: appliedCoupon?.code || null,
+            discount: discountAmount,
             paymentMethod: 'COD',
             paymentStatus: 'pending',
             orderStatus: 'pending',
@@ -152,6 +204,9 @@ const OrderSummary = ({ totalPrice, items }) => {
                 createdAt: new Date().toISOString(),
             }));
 
+            // Decrement inventory stock
+            dispatch(decrementStock({ items: orderPayload.items }));
+
             // Clear shopping cart
             dispatch(clearCart());
 
@@ -163,7 +218,7 @@ const OrderSummary = ({ totalPrice, items }) => {
                     phone: customerPhone,
                     address: `${formData.street.trim()}, ${formData.city.trim()}`,
                 },
-                jwt: `gocart_token_${Date.now()}`,
+                token: null,
             }));
 
             setShowReviewModal(false);
@@ -319,12 +374,61 @@ const OrderSummary = ({ totalPrice, items }) => {
                     </div>
                 </div>
 
+                {/* Promo Coupon Code Field */}
+                <div className='my-4 pt-3 border-t border-slate-200'>
+                    <p className='text-slate-600 text-xs font-semibold mb-2 flex items-center gap-1.5'>
+                        <Tag size={13} className='text-emerald-600' /> Have a Promo Coupon?
+                    </p>
+                    {!appliedCoupon ? (
+                        <form onSubmit={handleApplyCoupon} className='flex gap-2'>
+                            <input
+                                type='text'
+                                placeholder='Enter coupon code (e.g. SAVE20)'
+                                value={couponInput}
+                                onChange={(e) => setCouponInput(e.target.value)}
+                                className='flex-1 px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl uppercase outline-none focus:border-emerald-600 font-mono tracking-wider'
+                            />
+                            <button
+                                type='submit'
+                                disabled={couponLoading || !couponInput.trim()}
+                                className='px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-semibold hover:bg-black disabled:opacity-50 transition cursor-pointer'
+                            >
+                                {couponLoading ? 'Checking...' : 'Apply'}
+                            </button>
+                        </form>
+                    ) : (
+                        <div className='bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 flex items-center justify-between text-xs'>
+                            <div className='flex items-center gap-2'>
+                                <CheckCircle2 size={15} className='text-emerald-600 shrink-0' />
+                                <div>
+                                    <span className='font-bold text-emerald-800 font-mono'>{appliedCoupon.code}</span>
+                                    <span className='text-emerald-700 ml-1.5'>(-{currency}{discountAmount.toLocaleString()})</span>
+                                </div>
+                            </div>
+                            <button
+                                type='button'
+                                onClick={handleRemoveCoupon}
+                                className='text-slate-400 hover:text-rose-600 p-1 transition cursor-pointer'
+                                title='Remove Coupon'
+                            >
+                                <X size={14} />
+                            </button>
+                        </div>
+                    )}
+                </div>
+
                 {/* Pricing Breakdown */}
                 <div className='py-3 border-t border-b border-slate-200 space-y-2'>
                     <div className='flex justify-between text-xs text-slate-500'>
                         <span>Subtotal:</span>
                         <span className='font-medium text-slate-800'>{currency}{totalPrice.toLocaleString()}</span>
                     </div>
+                    {appliedCoupon && (
+                        <div className='flex justify-between text-xs text-emerald-600 font-semibold'>
+                            <span>Coupon Discount ({appliedCoupon.code}):</span>
+                            <span>-{currency}{discountAmount.toLocaleString()}</span>
+                        </div>
+                    )}
                     <div className='flex justify-between text-xs text-slate-500'>
                         <span>Delivery Fee:</span>
                         <span className='text-green-600 font-semibold'>Free Delivery</span>
@@ -333,7 +437,7 @@ const OrderSummary = ({ totalPrice, items }) => {
 
                 <div className='flex justify-between py-4 text-base font-bold text-slate-800'>
                     <span>Total Amount:</span>
-                    <span className='text-lg text-slate-900'>{currency}{totalPrice.toLocaleString()}</span>
+                    <span className='text-lg text-slate-900'>{currency}{finalPayable.toLocaleString()}</span>
                 </div>
 
                 {/* Review Order Button */}
@@ -438,13 +542,19 @@ const OrderSummary = ({ totalPrice, items }) => {
                                     <span>Subtotal:</span>
                                     <span className='font-semibold text-slate-800'>{currency}{totalPrice.toLocaleString()}</span>
                                 </div>
+                                {appliedCoupon && (
+                                    <div className='flex justify-between text-emerald-700 font-semibold'>
+                                        <span>Coupon Discount ({appliedCoupon.code}):</span>
+                                        <span>-{currency}{discountAmount.toLocaleString()}</span>
+                                    </div>
+                                )}
                                 <div className='flex justify-between'>
                                     <span>Shipping & Delivery:</span>
                                     <span className='font-semibold text-green-700'>FREE</span>
                                 </div>
                                 <div className='flex justify-between pt-1.5 border-t border-green-200 text-sm font-bold text-slate-900'>
                                     <span>Total Payable:</span>
-                                    <span className='text-base text-slate-900'>{currency}{totalPrice.toLocaleString()}</span>
+                                    <span className='text-base text-slate-900'>{currency}{finalPayable.toLocaleString()}</span>
                                 </div>
                             </div>
                         </div>
