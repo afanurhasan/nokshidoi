@@ -122,7 +122,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                     />
                   ))}
                   <span className="text-xs font-black text-slate-800 ml-1">
-                    {rating.toFixed(1)} / ৫.০
+                    {rating.toFixed(1)} / 5.0
                   </span>
                 </div>
               </div>
