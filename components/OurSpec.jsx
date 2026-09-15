@@ -1,92 +1,63 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Title from './Title';
+import { BUSINESS_CONFIG } from '@/config/business';
 import {
-  Truck,
-  CreditCard,
-  ShieldCheck,
-  Users,
-  Clock,
-  Headphones,
+  Milk,
   Sparkles,
+  CheckCircle2,
+  ShoppingBag,
+  Truck,
+  MessageCircle,
 } from 'lucide-react';
 
 const ICON_MAP = {
+  Milk,
+  Sparkles,
+  CheckCircle2,
+  ShoppingBag,
   Truck,
-  CreditCard,
-  ShieldCheck,
-  Users,
-  Clock,
-  Headphones,
+  MessageCircle,
 };
 
-const DEFAULT_SPECS = [
-  {
-    id: 'tb_1',
-    icon: 'Truck',
-    title: 'Fast Delivery Across Bangladesh',
-    description: 'Inside Dhaka 24-48 hrs, Outside Dhaka 2-4 days. Doorstep delivery with care.',
-    accent: '#05DF72',
-    enabled: true,
-  },
-  {
-    id: 'tb_2',
-    icon: 'CreditCard',
-    title: '100% Secured Payment & COD',
-    description: 'bKash, Nagad, Cards or Cash on Delivery available at your convenience.',
-    accent: '#FF8904',
-    enabled: true,
-  },
-  {
-    id: 'tb_3',
-    icon: 'Users',
-    title: 'Trusted by 10,000+ Happy Customers',
-    description: 'Original warranty-backed products with dedicated after-sales support.',
-    accent: '#A684FF',
-    enabled: true,
-  },
-];
-
-const OurSpecs = () => {
-  const specs = DEFAULT_SPECS;
+export default function OurSpec() {
+  const features = BUSINESS_CONFIG.features;
 
   return (
-    <div className="px-6 my-20 max-w-6xl mx-auto">
+    <section id="why-us" className="py-16 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto">
       <Title
-        visibleButton={false}
-        title="Our Specifications"
-        description="We offer top-tier service and convenience to ensure your shopping experience is smooth, secure and completely hassle-free."
+        badge="বিশুদ্ধতা ও ঐতিহ্য"
+        title="কেন নকশী দই বেছে নেবেন?"
+        subtitle="আমাদের বিশেষত্ব ও খাঁটি স্বাদের অঙ্গীকার"
+        description="আমরা বগুড়ার আদি কারিগরি বজায় রেখে কোনো কৃত্রিম পাউডার বা ক্ষতিকর ঘনকারক ছাড়াই খাঁটি তরল দুধ ও পোড়ামাটির পাত্রে স্বাস্থ্যসম্মত দই প্রস্তুত করি।"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 gap-y-12 mt-16">
-        {specs.map((spec, index) => {
-          const IconComp = ICON_MAP[spec.icon] || Sparkles;
-          const accentColor = spec.accent || '#05DF72';
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-12 sm:mt-16">
+        {features.map((item, index) => {
+          const IconComp = ICON_MAP[item.icon] || Sparkles;
 
           return (
             <div
-              key={spec.id || index}
-              className="relative min-h-44 p-6 flex flex-col items-center justify-center w-full text-center border rounded-2xl group transition-all duration-300 hover:shadow-md"
-              style={{
-                backgroundColor: `${accentColor}10`,
-                borderColor: `${accentColor}35`,
-              }}
+              key={item.id || index}
+              className="relative p-6 sm:p-7 bg-white border border-amber-100/90 rounded-2xl shadow-xs hover:shadow-lg hover:border-amber-300 card-hover flex flex-col items-start transition-all duration-300"
             >
-              <div
-                className="absolute -top-6 text-white size-12 flex items-center justify-center rounded-xl shadow-md group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300"
-                style={{ backgroundColor: accentColor }}
-              >
+              {/* আইকন কন্টেইনার */}
+              <div className="size-12 rounded-xl bg-amber-50 border border-amber-200/80 text-amber-800 flex items-center justify-center mb-4 shadow-xs">
                 <IconComp size={24} />
               </div>
-              <h3 className="text-slate-800 font-bold text-base mt-3">{spec.title}</h3>
-              <p className="text-sm text-slate-600 mt-2 leading-relaxed">{spec.description}</p>
+
+              <h3 className="text-base sm:text-lg font-black text-slate-900 leading-snug">
+                {item.title}
+              </h3>
+
+              <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed font-medium">
+                {item.description}
+              </p>
             </div>
           );
         })}
       </div>
-    </div>
+    </section>
   );
-};
-
-export default OurSpecs;
+}

@@ -1,207 +1,205 @@
 'use client';
 
-import { Search, ShoppingCart, User, LogOut, PackageCheck, ChevronDown, Phone, Mail } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import AuthModal from "./AuthModal";
-import { logout } from "@/lib/features/auth/authSlice";
-import toast from "react-hot-toast";
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Menu, X } from 'lucide-react';
+import { BUSINESS_CONFIG } from '@/config/business';
+import WhatsAppButton from './WhatsAppButton';
 
-const Navbar = () => {
-    const router = useRouter();
-    const dispatch = useDispatch();
+export default function Navbar() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-    const [search, setSearch] = useState('');
-    const [showAuthModal, setShowAuthModal] = useState(false);
-    const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-    const [mounted, setMounted] = useState(false);
-    const dropdownRef = useRef(null);
+  const [activeItem, setActiveItem] = useState('');
 
-    const cartCount = useSelector(state => state.cart.total);
-    const { user, isAuthenticated } = useSelector(state => state.auth);
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+  useEffect(() => {
+    const handleCategoryEvent = (e) => {
+      if (e.detail) {
+        setActiveItem(e.detail);
+      }
+    };
+    window.addEventListener('select-product-category', handleCategoryEvent);
+    return () => window.removeEventListener('select-product-category', handleCategoryEvent);
+  }, []);
 
-    const handleSearch = (e) => {
+  const navLinks = [
+    { name: 'হোম', href: '/' },
+    { name: 'দই', href: '/#products', catId: 'doi' },
+    { name: 'মিষ্টি', href: '/#products', catId: 'mishti' },
+    { name: 'রসমালাই', href: '/#products', catId: 'rasmalai' },
+    { name: 'মাঠা', href: '/#products', catId: 'matha' },
+    { name: 'পাইকারি অর্ডার', href: '/#wholesale' },
+    { name: 'যোগাযোগ', href: '/#contact' },
+  ];
+
+  const handleNavClick = (e, link) => {
+    setMobileMenuOpen(false);
+    if (typeof window === 'undefined') return;
+
+    if (link.catId) {
+      setActiveItem(link.catId);
+      sessionStorage.setItem('selected-category', link.catId);
+    } else {
+      setActiveItem(link.href);
+    }
+
+    const isHome = window.location.pathname === '/';
+
+    if (isHome) {
+      if (link.href === '/') {
         e.preventDefault();
-        router.push(`/shop?search=${search}`);
-    };
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.history.pushState(null, '', '/');
+      } else if (link.href.startsWith('/#')) {
+        e.preventDefault();
+        const targetId = link.href.replace('/#', '');
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+          window.history.pushState(null, '', link.href);
+        }
+        if (link.catId) {
+          window.dispatchEvent(new CustomEvent('select-product-category', { detail: link.catId }));
+        }
+      }
+    }
+  };
 
-    const handleLogout = () => {
-        dispatch(logout());
-        setShowProfileDropdown(false);
-        toast.success("Logged out successfully");
-    };
+  return (
+    <>
+      {/* শীর্ষ নোটিফিকেশন বার */}
+      <div className="bg-amber-950 text-amber-50 text-xs py-2 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+          <p className="font-medium tracking-wide">
+            🍶 <span className="font-bold text-amber-300">নকশী দই ভাণ্ডার:</span> &ldquo;{BUSINESS_CONFIG.motto}&rdquo; | সারা বাংলাদেশে পাইকারি ডেলিভারি
+          </p>
+          <div className="flex items-center gap-3 text-[11px] font-medium">
+            <a
+              href={`tel:${BUSINESS_CONFIG.showroomPhoneRaw}`}
+              className="hover:text-amber-200 text-amber-300 transition font-bold"
+            >
+              শোরুম: {BUSINESS_CONFIG.showroomPhone}
+            </a>
+          </div>
+        </div>
+      </div>
 
-    // Close profile dropdown when clicking outside
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setShowProfileDropdown(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
-
-    return (
-        <nav className="relative bg-white sticky top-0 z-40 shadow-xs">
-            <div className="mx-6">
-                <div className="flex items-center justify-between max-w-7xl mx-auto py-3.5 transition-all">
-                    <Link href="/" className="flex items-center gap-2.5 group">
-                        <img
-                            src="/logo.png"
-                            alt="MustBuy Logo"
-                            className="h-10 w-auto object-contain rounded-xl shadow-xs group-hover:scale-105 transition"
-                        />
-                        <div className="flex flex-col">
-                            <span className="text-2xl font-bold tracking-tight text-slate-900 leading-none">
-                                Must<span className="text-[#FF8904]">Buy</span>
-                            </span>
-                            <span className="text-[10px] tracking-wide text-slate-400 font-medium hidden sm:inline">
-                                Buy The Chosen Ones
-                            </span>
-                        </div>
-                    </Link>
-
-                    {/* Desktop Menu */}
-                    <div className="hidden sm:flex items-center gap-4 lg:gap-8 text-slate-600">
-                        <Link href="/" className="hover:text-slate-900 transition">Home</Link>
-                        <Link href="/shop" className="hover:text-slate-900 transition">Shop</Link>
-                        <Link href="/orders" className="hover:text-slate-900 transition">Orders</Link>
-
-                        <form onSubmit={handleSearch} className="hidden xl:flex items-center w-xs text-sm gap-2 bg-slate-100 px-4 py-2.5 rounded-full focus-within:ring-2 focus-within:ring-slate-300">
-                            <Search size={18} className="text-slate-500" />
-                            <input
-                                className="w-full bg-transparent outline-none placeholder-slate-500"
-                                type="text"
-                                placeholder="Search products..."
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                            />
-                        </form>
-
-                        <Link href="/cart" className="relative flex items-center gap-2 text-slate-600 hover:text-slate-900 transition">
-                            <ShoppingCart size={18} />
-                            Cart
-                            {cartCount > 0 && (
-                                <span className="absolute -top-1 -right-2 text-[10px] text-white bg-green-600 size-4 flex items-center justify-center rounded-full font-bold">
-                                    {cartCount}
-                                </span>
-                            )}
-                        </Link>
-
-                        {mounted && isAuthenticated ? (
-                            <div className="relative" ref={dropdownRef}>
-                                <button
-                                    onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-                                    className="flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-full transition cursor-pointer"
-                                >
-                                    <div className="size-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold text-xs">
-                                        {(user?.username || user?.email || 'U')[0].toUpperCase()}
-                                    </div>
-                                    <div className="text-left hidden lg:block">
-                                        <p className="text-xs font-bold text-slate-800 line-clamp-1">{user?.username || 'User'}</p>
-                                        <p className="text-[10px] text-slate-400 line-clamp-1">{user?.email || ''}</p>
-                                    </div>
-                                    <ChevronDown size={14} className="text-slate-400" />
-                                </button>
-
-                                {/* Dropdown Card */}
-                                {showProfileDropdown && (
-                                    <div className="absolute right-0 mt-2 w-64 bg-white border border-slate-200 rounded-2xl shadow-xl p-4 text-xs z-50 animate-in fade-in duration-150">
-                                        <div className="border-b border-slate-100 pb-3 mb-3">
-                                            <p className="font-bold text-sm text-slate-800">{user?.username || 'Customer'}</p>
-                                            <p className="text-slate-500 flex items-center gap-1.5 mt-1">
-                                                <Mail size={12} className="text-slate-400 shrink-0" />
-                                                <span className="truncate">{user?.email || 'N/A'}</span>
-                                            </p>
-                                            {user?.phone && (
-                                                <p className="text-slate-500 flex items-center gap-1.5 mt-1">
-                                                    <Phone size={12} className="text-slate-400 shrink-0" />
-                                                    <span>{user.phone}</span>
-                                                </p>
-                                            )}
-                                        </div>
-
-                                        <div className="space-y-1">
-                                            <Link
-                                                href="/orders"
-                                                onClick={() => setShowProfileDropdown(false)}
-                                                className="flex items-center gap-2 p-2 hover:bg-slate-50 rounded-lg text-slate-700 font-medium transition"
-                                            >
-                                                <PackageCheck size={16} className="text-green-600" />
-                                                My Orders
-                                            </Link>
-                                            <button
-                                                onClick={handleLogout}
-                                                className="w-full flex items-center gap-2 p-2 hover:bg-red-50 text-red-600 rounded-lg font-medium transition cursor-pointer text-left"
-                                            >
-                                                <LogOut size={16} />
-                                                Logout
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <button
-                                onClick={() => setShowAuthModal(true)}
-                                className="px-7 py-2 bg-slate-800 hover:bg-slate-900 transition text-white text-sm font-medium rounded-full cursor-pointer shadow-xs"
-                            >
-                                Login
-                            </button>
-                        )}
-                    </div>
-
-                    {/* Mobile User Button */}
-                    <div className="sm:hidden flex items-center gap-3">
-                        <Link href="/cart" className="relative text-slate-600 p-1">
-                            <ShoppingCart size={20} />
-                            {cartCount > 0 && (
-                                <span className="absolute -top-1 -right-1 text-[10px] text-white bg-green-600 size-4 flex items-center justify-center rounded-full font-bold">
-                                    {cartCount}
-                                </span>
-                            )}
-                        </Link>
-                        {mounted && isAuthenticated ? (
-                            <div className="flex items-center gap-2">
-                                <Link
-                                    href="/orders"
-                                    className="size-7 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-bold"
-                                    title={user?.email}
-                                >
-                                    {(user?.username || user?.email || 'U')[0].toUpperCase()}
-                                </Link>
-                                <button
-                                    onClick={handleLogout}
-                                    className="text-slate-500 p-1"
-                                    title="Logout"
-                                >
-                                    <LogOut size={18} />
-                                </button>
-                            </div>
-                        ) : (
-                            <button
-                                onClick={() => setShowAuthModal(true)}
-                                className="px-5 py-1.5 bg-slate-800 hover:bg-slate-900 text-xs font-medium transition text-white rounded-full cursor-pointer"
-                            >
-                                Login
-                            </button>
-                        )}
-                    </div>
-                </div>
+      {/* মূল নেভিগেশন বার */}
+      <nav
+        className={`sticky top-0 z-40 bg-white/95 backdrop-blur-md transition-all duration-300 border-b ${
+          scrolled ? 'border-amber-200/60 shadow-sm py-2' : 'border-slate-100 py-3'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+          {/* ব্র্যান্ড অফিশিয়াল লোগো */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative h-12 sm:h-14 w-auto flex items-center">
+              <img
+                src="/logo.png"
+                alt="নকশী দই ভাণ্ডার লোগো"
+                className="h-12 sm:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
+              />
             </div>
-            <hr className="border-gray-200" />
+            <div className="hidden sm:flex flex-col">
+              <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 leading-none">
+                নকশী দই ভাণ্ডার
+              </span>
+              <span className="text-[10px] tracking-wide text-amber-800 font-bold mt-1">
+                “বিশুদ্ধতায় লক্ষ্য, তৃপ্তিতেই সন্তুষ্টি”
+              </span>
+            </div>
+          </Link>
 
-            <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
-        </nav>
-    );
-};
+          {/* ডেক্সটপ মেনু লিংক */}
+          <div className="hidden lg:flex items-center gap-6 xl:gap-7 text-sm font-bold text-slate-700">
+            {navLinks.map((link, idx) => {
+              const isActive = activeItem === (link.catId || link.href);
+              return (
+                <Link
+                  key={idx}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link)}
+                  className={`transition-colors py-1 relative ${
+                    isActive ? 'text-amber-800 font-extrabold' : 'hover:text-amber-700'
+                  }`}
+                >
+                  {link.name}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-800 rounded-full" />
+                  )}
+                </Link>
+              );
+            })}
+          </div>
 
-export default Navbar;
+          {/* ডেক্সটপ ডানপাশের বাটন */}
+          <div className="hidden sm:flex items-center gap-3">
+            <WhatsAppButton
+              size="md"
+              label="হোয়াটসঅ্যাপে অর্ডার করুন"
+              className="rounded-full shadow-xs font-bold"
+            />
+          </div>
+
+          {/* মোবাইল মেনু টগল বাটন */}
+          <div className="flex items-center gap-2 sm:hidden">
+            <WhatsAppButton
+              size="sm"
+              label="অর্ডার"
+              className="rounded-full !px-3 font-bold"
+            />
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 text-slate-700 hover:text-slate-900 focus:outline-none"
+              aria-label="মেনু খুলুন"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {/* মোবাইল মেনু ড্রয়ার */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-white border-b border-amber-100 px-6 py-5 shadow-lg animate-in slide-in-from-top duration-200">
+            <div className="flex flex-col space-y-3 text-sm font-bold text-slate-800">
+              {navLinks.map((link, idx) => {
+                const isActive = activeItem === (link.catId || link.href);
+                return (
+                  <Link
+                    key={idx}
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link)}
+                    className={`py-2 border-b border-slate-50 transition-all ${
+                      isActive
+                        ? 'text-amber-800 font-black pl-2 bg-amber-50/70 rounded-lg'
+                        : 'hover:text-amber-700 hover:pl-1'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="mt-5 pt-4 border-t border-slate-100 flex flex-col gap-3">
+              <WhatsAppButton
+                size="md"
+                label="সরাসরি হোয়াটসঅ্যাপ অর্ডার"
+                className="w-full text-center"
+              />
+            </div>
+          </div>
+        )}
+      </nav>
+    </>
+  );
+}

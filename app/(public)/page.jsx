@@ -1,57 +1,45 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
-import BestSelling from "@/components/BestSelling";
-import Hero from "@/components/Hero";
-import Newsletter from "@/components/Newsletter";
-import OurSpecs from "@/components/OurSpec";
-import LatestProducts from "@/components/LatestProducts";
-import DynamicProductSections from "@/components/DynamicProductSections";
-import { useQuery } from "@apollo/client/react";
-import { GET_LANDING_PAGE } from "@/lib/graphql/queries";
-import { getStrapiUrl } from "@/lib/strapi";
+import React from 'react';
+import Hero from '@/components/Hero';
+import FourMainProducts from '@/components/FourMainProducts';
+import ProductShowcase from '@/components/ProductShowcase';
+import OurSpec from '@/components/OurSpec';
+import WholesaleSection from '@/components/WholesaleSection';
+import GallerySection from '@/components/GallerySection';
+import AboutSection from '@/components/AboutSection';
+import ReviewMarquee from '@/components/ReviewMarquee';
+import ContactSection from '@/components/ContactSection';
 
 export default function Home() {
-    const { data } = useQuery(GET_LANDING_PAGE, { 
-        fetchPolicy: 'cache-and-network',
-        errorPolicy: 'ignore' 
-    });
+  return (
+    <main className="min-h-screen">
+      {/* 1. Hero Section */}
+      <Hero />
 
-    const [restSections, setRestSections] = useState(null);
+      {/* 2. Four Main Products Showcase (দই, মিষ্টি, রসমালাই, মাঠা) */}
+      <FourMainProducts />
 
-    // Direct Strapi REST fallback to guarantee live updates even if Apollo cache hasn't invalidated
-    useEffect(() => {
-        const strapiUrl = getStrapiUrl();
-        fetch(`${strapiUrl}/api/landing-page?populate[productSections][populate][products][populate]=*`)
-            .then(res => res.json())
-            .then(json => {
-                const sec = json?.data?.productSections;
-                if (Array.isArray(sec) && sec.length > 0) {
-                    setRestSections(sec);
-                }
-            })
-            .catch(() => {});
-    }, []);
+      {/* 3. Products Showcase */}
+      <ProductShowcase />
 
-    const dynamicSections = (data?.landingPage?.productSections && data.landingPage.productSections.length > 0)
-        ? data.landingPage.productSections
-        : restSections;
+      {/* 5. Why Choose Us (Purity, Clay Pot, Hygiene, Delivery) */}
+      <OurSpec />
 
-    const hasDynamicSections = Boolean(dynamicSections && dynamicSections.length > 0);
+      {/* 6. Dedicated Wholesale Section (Weddings, Catering, B2B) */}
+      <WholesaleSection />
 
-    return (
-        <div>
-            <Hero />
-            {hasDynamicSections ? (
-                <DynamicProductSections sections={dynamicSections} />
-            ) : (
-                <>
-                    <LatestProducts />
-                    <BestSelling />
-                </>
-            )}
-            <OurSpecs />
-            <Newsletter />
-        </div>
-    );
+      {/* 7. Two-way Customer Reviews Marquee */}
+      <ReviewMarquee />
+
+      {/* 8. Visual Gallery (Clay pot craft, products, festive handis) */}
+      <GallerySection />
+
+      {/* 9. About Us Section (Story, Freshness, Purity) */}
+      <AboutSection />
+
+      {/* 8. Contact & Delivery Section */}
+      <ContactSection />
+    </main>
+  );
 }
