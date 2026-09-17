@@ -129,11 +129,6 @@ export default function ContactSection() {
                 </a>
               </div>
             </div>
-
-            <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
-              <span className="font-bold text-slate-700">০১৭৭৮-৩০৬৫১২ নম্বরে সরাসরি WhatsApp করুন</span>
-              <WhatsAppButton size="sm" label="WhatsApp-এ মেসেজ দিন" />
-            </div>
           </div>
         </div>
       </div>

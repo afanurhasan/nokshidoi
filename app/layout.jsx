@@ -1,10 +1,9 @@
-import { Hind_Siliguri, Outfit } from "next/font/google";
+import { Anek_Bangla, Outfit } from "next/font/google";
 import "./globals.css";
 import { BUSINESS_CONFIG } from "@/config/business";
 
-const hindSiliguri = Hind_Siliguri({
+const anekBangla = Anek_Bangla({
   subsets: ["bengali", "latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-bengali",
 });
@@ -54,7 +53,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="bn" className="scroll-smooth">
-      <body className={`${hindSiliguri.className} antialiased min-h-screen flex flex-col bg-[#FFFDF7] text-slate-900`}>
+      <body className={`${anekBangla.className} antialiased min-h-screen flex flex-col bg-[#FFFDF7] text-slate-900`}>
         {children}
       </body>
     </html>

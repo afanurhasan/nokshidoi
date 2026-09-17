@@ -218,6 +218,7 @@ export const BUSINESS_CONFIG = {
     { id: "rasmalai", name: "রসমালাই", icon: "🥣", tagline: "ঘন মালাইয়ের শাহী রসমালাই" },
     { id: "mishti", name: "মিষ্টি", icon: "🍯", tagline: "১০০% খাঁটি ছানার মিষ্টি" },
     { id: "matha", name: "মাঠা ও ঘোল", icon: "🥛", tagline: "তাজা পুষ্টিকর মাঠা ও ঘোল" },
+    { id: "ghee", name: "ঘি", icon: "🧈", tagline: "১০০% খাঁটি গাওয়া ঘি" },
   ],
 
   // আমাদের বিশেষত্ব ও সুবিধা

@@ -28,18 +28,15 @@ export default function ProductCard({ product }) {
         </Link>
 
         {/* গ্রেড ব্যাজ */}
-        <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-1.5">
-          <span className={`px-3 py-1 rounded-full text-[11px] font-black shadow-md ${
-            isAGrade ? 'bg-amber-800 text-white' : 'bg-blue-800 text-white'
-          }`}>
-            {product.grade || 'A Grade'}
-          </span>
-          {product.bestseller && (
-            <span className="px-2.5 py-1 rounded-full text-[11px] font-black bg-rose-600 text-white shadow-md">
-              জনপ্রিয়
+        {product.grade && (
+          <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-1.5">
+            <span className={`px-3 py-1 rounded-full text-[11px] font-black shadow-md ${
+              isAGrade ? 'bg-amber-800 text-white' : 'bg-blue-800 text-white'
+            }`}>
+              {product.grade}
             </span>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* কন্টেন্ট: ক্লায়েন্টের নির্ধারিত সুনির্দিষ্ট কাঠামোর বিবরণ */}
@@ -51,50 +48,72 @@ export default function ProductCard({ product }) {
               {product.name}
             </h3>
           </Link>
-          <span className="text-[11px] font-bold text-amber-900 block mt-0.5">
-            {product.grade}
-          </span>
+          {product.grade && (
+            <span className="text-[11px] font-bold text-amber-900 block mt-0.5">
+              {product.grade}
+            </span>
+          )}
 
           {/* ক্লায়েন্টের স্পেসিফিকেশন টেবিল/লিস্ট */}
-          <div className="mt-3.5 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-xs font-medium">
-            <div className="bg-amber-50/60 p-2 rounded-xl border border-amber-100">
-              <span className="text-[10px] font-extrabold text-slate-500 block">নিট ওজন</span>
-              <span className="text-xs font-black text-slate-900">{product.netWeight}</span>
+          {(product.netWeight || product.grossWeight || product.carton || product.minOrder) && (
+            <div className="mt-3.5 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-xs font-medium">
+              {product.netWeight && (
+                <div className="bg-amber-50/60 p-2 rounded-xl border border-amber-100">
+                  <span className="text-[10px] font-extrabold text-slate-500 block truncate">
+                    {product.netWeightLabel || 'নিট ওজন'}
+                  </span>
+                  <span className="text-xs font-black text-slate-900">{product.netWeight}</span>
+                </div>
+              )}
+              {product.grossWeight && (
+                <div className="bg-amber-50/60 p-2 rounded-xl border border-amber-100">
+                  <span className="text-[10px] font-extrabold text-slate-500 block truncate">
+                    {product.grossWeightLabel || 'মাটিসহ ওজন'}
+                  </span>
+                  <span className="text-xs font-black text-slate-900">{product.grossWeight}</span>
+                </div>
+              )}
+              {product.carton && (
+                <div className="bg-slate-50 p-2 rounded-xl border border-slate-200">
+                  <span className="text-[10px] font-extrabold text-slate-500 block truncate">কার্টুন</span>
+                  <span className="text-xs font-black text-slate-900">{product.carton}</span>
+                </div>
+              )}
+              {product.minOrder && (
+                <div className="bg-slate-50 p-2 rounded-xl border border-slate-200">
+                  <span className="text-[10px] font-extrabold text-slate-500 block truncate">
+                    {product.minOrderLabel || 'সর্বনিম্ন অর্ডার'}
+                  </span>
+                  <span className="text-xs font-black text-amber-800">{product.minOrder}</span>
+                </div>
+              )}
             </div>
-            <div className="bg-amber-50/60 p-2 rounded-xl border border-amber-100">
-              <span className="text-[10px] font-extrabold text-slate-500 block">মাটিসহ ওজন</span>
-              <span className="text-xs font-black text-slate-900">{product.grossWeight}</span>
-            </div>
-            <div className="bg-slate-50 p-2 rounded-xl border border-slate-200">
-              <span className="text-[10px] font-extrabold text-slate-500 block">কার্টুন</span>
-              <span className="text-xs font-black text-slate-900">{product.carton}</span>
-            </div>
-            <div className="bg-slate-50 p-2 rounded-xl border border-slate-200">
-              <span className="text-[10px] font-extrabold text-slate-500 block">Minimum Order</span>
-              <span className="text-xs font-black text-amber-800">{product.minOrder}</span>
-            </div>
-          </div>
+          )}
         </div>
 
         {/* মূল্য এবং বাটন অংশ */}
         <div className="pt-3 border-t border-slate-100">
           <div className="flex items-baseline justify-between mb-3">
-            <div>
-              <span className="text-[10px] font-extrabold text-slate-500 block uppercase">
-                পাইকারি মূল্য
-              </span>
-              <span className="text-xl font-black text-amber-900 leading-none font-mono">
-                {product.wholesalePrice}
-              </span>
-            </div>
-            <div className="text-right">
-              <span className="text-[10px] font-bold text-slate-500 block uppercase">
-                খুচরা মূল্য
-              </span>
-              <span className="text-xs font-black text-slate-600 line-through">
-                {product.retailPrice}
-              </span>
-            </div>
+            {product.wholesalePrice && (
+              <div>
+                <span className="text-[10px] font-extrabold text-slate-500 block uppercase">
+                  পাইকারি মূল্য
+                </span>
+                <span className="text-xl font-black text-amber-900 leading-none font-mono">
+                  {product.wholesalePrice}
+                </span>
+              </div>
+            )}
+            {product.retailPrice && (
+              <div className="text-right">
+                <span className="text-[10px] font-bold text-slate-500 block uppercase">
+                  খুচরা মূল্য
+                </span>
+                <span className="text-xs font-black text-slate-600 line-through">
+                  {product.retailPrice}
+                </span>
+              </div>
+            )}
           </div>
 
           <Link

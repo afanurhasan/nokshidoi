@@ -52,9 +52,11 @@ export default function ProductShowcase() {
       const q = searchQuery.toLowerCase().trim();
       result = result.filter(
         (p) =>
-          p.name.toLowerCase().includes(q) ||
-          p.shortDescription.toLowerCase().includes(q) ||
-          p.size.toLowerCase().includes(q)
+          p.name?.toLowerCase().includes(q) ||
+          p.grade?.toLowerCase().includes(q) ||
+          p.netWeight?.toLowerCase().includes(q) ||
+          p.shortDescription?.toLowerCase().includes(q) ||
+          p.size?.toLowerCase().includes(q)
       );
     }
 
@@ -64,11 +66,11 @@ export default function ProductShowcase() {
   const displayedProducts = filteredProducts.slice(0, visibleCount);
 
   return (
-    <section id="products" className="scroll-mt-20 py-16 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+    <section id="products" className="scroll-mt-20 pt-4 sm:pt-6 pb-16 sm:pb-24 px-4 sm:px-6 max-w-7xl mx-auto">
       <Title
         badge="দেশব্যাপী পাইকারি সরবরাহ"
-        title="আমাদের পাইকারি খাদ্যপণ্য সম্ভার (A Grade ও B Grade)"
-        subtitle="দই • রসমালাই • বিভিন্ন ধরনের মিষ্টি • মাঠা ও ঘোল • খাঁটি গাওয়া ঘি"
+        title="আমাদের পাইকারি খাদ্যপণ্য সম্ভার"
+        subtitle="A Grade (High Quality) • B Grade (Medium Quality)"
         description="অনলাইন অর্ডার শুধুমাত্র পাইকারি ক্রেতাদের জন্য। খুচরা বিক্রয় আমাদের শোরুম (কলেজ রোড, শেরপুর, বগুড়া) থেকে করা হয়। বিভিন্ন পণ্যের প্যাকেজিং ও মূল্যতালিকা নিচে উল্লেখ রয়েছে।"
       />
 
@@ -80,7 +82,7 @@ export default function ProductShowcase() {
             <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="দই, মিষ্টি, রসমালাই বা মাঠার নাম দিয়ে খুঁজুন..."
+              placeholder="দই, মিষ্টি, রসমালাই, ঘি বা মাঠার নাম দিয়ে খুঁজুন..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 bg-amber-50/40 border border-amber-200/80 rounded-xl text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 transition"

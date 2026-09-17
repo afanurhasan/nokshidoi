@@ -66,18 +66,15 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 sizes="(max-width: 1024px) 100vw, 550px"
                 className="object-cover"
               />
-              <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
-                <span className={`px-3 py-1.5 rounded-full text-xs font-black shadow-md ${
-                  isAGrade ? 'bg-amber-800 text-white' : 'bg-blue-800 text-white'
-                }`}>
-                  {product.grade || 'A Grade'}
-                </span>
-                {product.bestseller && (
-                  <span className="px-3 py-1.5 rounded-full text-xs font-black bg-rose-600 text-white shadow-md">
-                    জনপ্রিয়
+              {product.grade && (
+                <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
+                  <span className={`px-3 py-1.5 rounded-full text-xs font-black shadow-md ${
+                    isAGrade ? 'bg-amber-800 text-white' : 'bg-blue-800 text-white'
+                  }`}>
+                    {product.grade}
                   </span>
-                )}
-              </div>
+                </div>
+              )}
             </div>
 
             {/* পাইকারি সতর্কতা বক্স */}
@@ -99,15 +96,50 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 <span className="font-bold block">বাসস্টপেজে ডেলিভারি</span>
               </div>
             </div>
+
+            {/* পণ্যের স্থায়িত্ব ও সংরক্ষণ কার্ড */}
+            <div className="p-4 bg-white/95 rounded-2xl border border-amber-200/90 shadow-2xs space-y-3">
+              <div className="flex items-center gap-2 pb-2 border-b border-amber-100">
+                <Clock size={16} className="text-amber-800 shrink-0" />
+                <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm">
+                  পণ্যের স্থায়িত্ব
+                </h4>
+              </div>
+
+              <p className="text-xs text-slate-600 font-medium">
+                দই ও রসমালাইয়ের সাধারণ স্থায়িত্ব—
+              </p>
+
+              <div className="space-y-1.5 text-xs">
+                <div className="flex items-center justify-between py-1.5 px-3 rounded-xl bg-amber-50/70 border border-amber-100">
+                  <span className="font-medium text-slate-700">স্বাভাবিক তাপমাত্রায়:</span>
+                  <span className="font-bold text-amber-950">৩–৪ দিন</span>
+                </div>
+                <div className="flex items-center justify-between py-1.5 px-3 rounded-xl bg-amber-50/70 border border-amber-100">
+                  <span className="font-medium text-slate-700">ফ্রিজে:</span>
+                  <span className="font-bold text-amber-950">৪–৬ দিন</span>
+                </div>
+                <div className="flex items-center justify-between py-1.5 px-3 rounded-xl bg-emerald-50/70 border border-emerald-100">
+                  <span className="font-medium text-slate-700">ডিপ ফ্রিজে:</span>
+                  <span className="font-bold text-emerald-800">১০ দিনের বেশি</span>
+                </div>
+              </div>
+
+              <p className="text-[11px] text-amber-900 bg-amber-100/50 p-2.5 rounded-xl leading-relaxed font-medium">
+                💡 পণ্যের মান ভালো রাখতে ঠান্ডা পরিবেশে সংরক্ষণ করা পরামর্শযোগ্য।
+              </p>
+            </div>
           </div>
 
           {/* ডান কলাম: ক্লায়েন্টের নির্ধারিত সুনির্দিষ্ট স্পেসিফিকেশন ও অর্ডার */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             <div>
               {/* গ্রেড ব্যাজ ও নাম */}
-              <div className="inline-block px-3 py-1 rounded-lg bg-amber-100 text-amber-950 text-xs font-black mb-2">
-                {product.grade}
-              </div>
+              {product.grade && (
+                <div className="inline-block px-3 py-1 rounded-lg bg-amber-100 text-amber-950 text-xs font-black mb-2">
+                  {product.grade}
+                </div>
+              )}
 
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
                 {product.name}
@@ -120,65 +152,77 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 </h3>
 
                 <div className="space-y-3 sm:space-y-3.5 text-sm sm:text-base">
-                  {/* নিট ওজন */}
-                  <div className="flex items-center justify-between py-2 border-b border-amber-100/80">
-                    <span className="text-slate-600 font-bold flex items-center gap-2">
-                      <Scale size={18} className="text-amber-700 shrink-0" />
-                      <span>নিট ওজন:</span>
-                    </span>
-                    <strong className="text-slate-900 font-black text-base">{product.netWeight}</strong>
-                  </div>
+                  {/* নিট ওজন / পাত্র ছাড়া */}
+                  {product.netWeight && (
+                    <div className="flex items-center justify-between py-2 border-b border-amber-100/80">
+                      <span className="text-slate-600 font-bold flex items-center gap-2">
+                        <Scale size={18} className="text-amber-700 shrink-0" />
+                        <span>{product.netWeightLabel || 'নিট ওজন'}:</span>
+                      </span>
+                      <strong className="text-slate-900 font-black text-base">{product.netWeight}</strong>
+                    </div>
+                  )}
 
-                  {/* মাটিসহ ওজন */}
-                  <div className="flex items-center justify-between py-2 border-b border-amber-100/80">
-                    <span className="text-slate-600 font-bold flex items-center gap-2">
-                      <Layers size={18} className="text-amber-700 shrink-0" />
-                      <span>মাটিসহ ওজন:</span>
-                    </span>
-                    <strong className="text-slate-900 font-black text-base">{product.grossWeight}</strong>
-                  </div>
+                  {/* মাটিসহ ওজন / পাত্রসহ */}
+                  {product.grossWeight && (
+                    <div className="flex items-center justify-between py-2 border-b border-amber-100/80">
+                      <span className="text-slate-600 font-bold flex items-center gap-2">
+                        <Layers size={18} className="text-amber-700 shrink-0" />
+                        <span>{product.grossWeightLabel || 'মাটিসহ ওজন'}:</span>
+                      </span>
+                      <strong className="text-slate-900 font-black text-base">{product.grossWeight}</strong>
+                    </div>
+                  )}
 
                   {/* পাইকারি মূল্য */}
-                  <div className="flex items-center justify-between py-2.5 px-3 bg-amber-100/70 rounded-2xl border border-amber-300">
-                    <span className="text-amber-950 font-black flex items-center gap-2">
-                      <Coins size={20} className="text-amber-800 shrink-0" />
-                      <span>পাইকারি মূল্য:</span>
-                    </span>
-                    <strong className="text-amber-950 font-black text-xl sm:text-2xl font-mono">
-                      {product.wholesalePrice}
-                    </strong>
-                  </div>
+                  {product.wholesalePrice && (
+                    <div className="flex items-center justify-between py-2.5 px-3 bg-amber-100/70 rounded-2xl border border-amber-300">
+                      <span className="text-amber-950 font-black flex items-center gap-2">
+                        <Coins size={20} className="text-amber-800 shrink-0" />
+                        <span>পাইকারি মূল্য:</span>
+                      </span>
+                      <strong className="text-amber-950 font-black text-xl sm:text-2xl font-mono">
+                        {product.wholesalePrice}
+                      </strong>
+                    </div>
+                  )}
 
                   {/* খুচরা মূল্য */}
-                  <div className="flex items-center justify-between py-2 border-b border-amber-100/80">
-                    <span className="text-slate-600 font-bold flex items-center gap-2">
-                      <Receipt size={18} className="text-slate-500 shrink-0" />
-                      <span>খুচরা মূল্য:</span>
-                    </span>
-                    <span className="text-slate-700 font-bold text-base line-through">
-                      {product.retailPrice}
-                    </span>
-                  </div>
+                  {product.retailPrice && (
+                    <div className="flex items-center justify-between py-2 border-b border-amber-100/80">
+                      <span className="text-slate-600 font-bold flex items-center gap-2">
+                        <Receipt size={18} className="text-slate-500 shrink-0" />
+                        <span>খুচরা মূল্য:</span>
+                      </span>
+                      <span className="text-slate-700 font-bold text-base line-through">
+                        {product.retailPrice}
+                      </span>
+                    </div>
+                  )}
 
                   {/* কার্টুন */}
-                  <div className="flex items-center justify-between py-2 border-b border-amber-100/80">
-                    <span className="text-slate-600 font-bold flex items-center gap-2">
-                      <Package size={18} className="text-amber-700 shrink-0" />
-                      <span>কার্টুন:</span>
-                    </span>
-                    <strong className="text-slate-900 font-black text-base">{product.carton}</strong>
-                  </div>
+                  {product.carton && (
+                    <div className="flex items-center justify-between py-2 border-b border-amber-100/80">
+                      <span className="text-slate-600 font-bold flex items-center gap-2">
+                        <Package size={18} className="text-amber-700 shrink-0" />
+                        <span>কার্টুন:</span>
+                      </span>
+                      <strong className="text-slate-900 font-black text-base">{product.carton}</strong>
+                    </div>
+                  )}
 
                   {/* Minimum Order */}
-                  <div className="flex items-center justify-between py-2.5 px-3 bg-emerald-50 rounded-2xl border border-emerald-200">
-                    <span className="text-emerald-950 font-black flex items-center gap-2">
-                      <Clock size={18} className="text-emerald-700 shrink-0" />
-                      <span>Minimum Order:</span>
-                    </span>
-                    <strong className="text-emerald-900 font-black text-base sm:text-lg">
-                      {product.minOrder}
-                    </strong>
-                  </div>
+                  {product.minOrder && (
+                    <div className="flex items-center justify-between py-2.5 px-3 bg-emerald-50 rounded-2xl border border-emerald-200">
+                      <span className="text-emerald-950 font-black flex items-center gap-2">
+                        <Clock size={18} className="text-emerald-700 shrink-0" />
+                        <span>{product.minOrderLabel || 'সর্বনিম্ন অর্ডার'}:</span>
+                      </span>
+                      <strong className="text-emerald-900 font-black text-base sm:text-lg">
+                        {product.minOrder}
+                      </strong>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
