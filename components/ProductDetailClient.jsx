@@ -3,41 +3,43 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BUSINESS_CONFIG, getWhatsAppWholesaleUrl } from '@/config/business';
+import { BUSINESS_CONFIG, getWhatsAppOrderUrl } from '@/config/business';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ProductCard from '@/components/ProductCard';
 import {
-  Star,
-  ShieldCheck,
-  Truck,
-  Sparkles,
   ArrowLeft,
-  Calendar,
-  CheckCircle2,
+  ShieldCheck,
+  Bus,
+  AlertTriangle,
+  Award,
+  Package,
+  Scale,
+  Layers,
+  Coins,
+  Receipt,
+  Clock,
 } from 'lucide-react';
 
 export default function ProductDetailClient({ product, relatedProducts }) {
   if (!product) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center px-4 py-20 text-center">
-        <h2 className="text-2xl font-black text-slate-900">দইটি পাওয়া যায়নি</h2>
+        <h2 className="text-2xl font-black text-slate-900">পণ্যটি পাওয়া যায়নি</h2>
         <p className="text-sm text-slate-500 mt-2 max-w-md">
-          আপনি যে দইটি খুঁজছেন সেটি বর্তমানে পরিবর্তিত হয়েছে বা সরিয়ে নেওয়া হয়েছে।
+          আপনি যে পণ্যটি খুঁজছেন সেটি বর্তমানে পরিবর্তিত হয়েছে বা সরিয়ে নেওয়া হয়েছে।
         </p>
         <Link
           href="/#products"
           className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-amber-800 text-white font-bold text-sm rounded-xl hover:bg-amber-900 transition"
         >
           <ArrowLeft size={16} />
-          <span>দই তালিকায় ফিরে যান</span>
+          <span>পণ্য তালিকায় ফিরে যান</span>
         </Link>
       </div>
     );
   }
 
-  const currency = BUSINESS_CONFIG.currency;
-  const rating = product.rating || 5.0;
-  const isWholesaleEligible = product.availability === 'wholesale' || product.availability === 'both';
+  const isAGrade = product.grade?.includes('A Grade');
 
   return (
     <div className="py-8 sm:py-12 px-4 sm:px-6 max-w-7xl mx-auto">
@@ -45,7 +47,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
       <div className="flex items-center gap-2 text-xs font-bold text-slate-500 mb-6 sm:mb-8 flex-wrap">
         <Link href="/" className="hover:text-amber-800 transition">হোম</Link>
         <span>/</span>
-        <Link href="/#products" className="hover:text-amber-800 transition">দই তালিকা</Link>
+        <Link href="/#products" className="hover:text-amber-800 transition">পণ্য তালিকা</Link>
         <span>/</span>
         <span className="text-slate-900 font-extrabold truncate max-w-xs">{product.name}</span>
       </div>
@@ -53,9 +55,9 @@ export default function ProductDetailClient({ product, relatedProducts }) {
       {/* প্রধান প্রোডাক্ট ডিটেইলস কার্ড */}
       <div className="bg-white rounded-3xl border border-amber-200/80 shadow-xs p-6 sm:p-10 lg:p-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          {/* বামপাশ: বড় অপ্টিমাইজড ছবি */}
-          <div className="lg:col-span-6 space-y-4">
-            <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-amber-50/50 border border-amber-100 shadow-inner">
+          {/* বাম কলাম: অপ্টিমাইজড ছবি ও ট্রাস্ট তথ্য */}
+          <div className="lg:col-span-5 space-y-4">
+            <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden bg-amber-50/50 border border-amber-100 shadow-inner">
               <Image
                 src={product.image}
                 alt={product.name}
@@ -64,164 +66,161 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 sizes="(max-width: 1024px) 100vw, 550px"
                 className="object-cover"
               />
-              <div className="absolute top-3 left-3 z-10 flex gap-2">
-                {product.availability === 'wholesale' ? (
-                  <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-orange-600 text-white shadow-xs">
-                    পাইকারি বাল্ক প্যাক
-                  </span>
-                ) : product.availability === 'both' ? (
-                  <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-100 text-amber-900 border border-amber-300">
-                    খুচরা ও পাইকারি
-                  </span>
-                ) : (
-                  <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-900 border border-emerald-300">
-                    খুচরা প্যাক
-                  </span>
-                )}
-
+              <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
+                <span className={`px-3 py-1.5 rounded-full text-xs font-black shadow-md ${
+                  isAGrade ? 'bg-amber-800 text-white' : 'bg-blue-800 text-white'
+                }`}>
+                  {product.grade || 'A Grade'}
+                </span>
                 {product.bestseller && (
-                  <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-rose-600 text-white shadow-xs">
+                  <span className="px-3 py-1.5 rounded-full text-xs font-black bg-rose-600 text-white shadow-md">
                     জনপ্রিয়
                   </span>
                 )}
               </div>
             </div>
 
-            {/* কোয়ালিটি গ্যারান্টি বার */}
-            <div className="grid grid-cols-3 gap-3 pt-2 text-center text-xs text-slate-700">
-              <div className="p-3 bg-amber-50/70 rounded-xl border border-amber-100">
+            {/* পাইকারি সতর্কতা বক্স */}
+            <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-amber-900 leading-relaxed font-medium flex items-start gap-2.5">
+              <AlertTriangle size={18} className="text-amber-800 shrink-0 mt-0.5" />
+              <div>
+                <strong>অনলাইন পাইকারি নীতি:</strong> অনলাইন অর্ডার শুধুমাত্র পাইকারি ক্রেতাদের জন্য। খুচরা বিক্রয় আমাদের শোরুম (কলেজ রোড, শেরপুর, বগুড়া) থেকে সরাসরি করা হয়।
+              </div>
+            </div>
+
+            {/* ডেলিভারি ও অনুমোদন ট্রাস্ট বার */}
+            <div className="grid grid-cols-2 gap-3 text-center text-xs text-slate-700">
+              <div className="p-3 bg-amber-50/60 rounded-xl border border-amber-100">
                 <ShieldCheck size={18} className="text-amber-700 mx-auto mb-1" />
-                <span className="font-bold block">১০০% খাঁটি দুধ</span>
+                <span className="font-bold block">BSTI ও ভ্যাট প্রত্যয়িত</span>
               </div>
-              <div className="p-3 bg-amber-50/70 rounded-xl border border-amber-100">
-                <Sparkles size={18} className="text-amber-700 mx-auto mb-1" />
-                <span className="font-bold block">মাটির হাঁড়ির স্বাদ</span>
-              </div>
-              <div className="p-3 bg-amber-50/70 rounded-xl border border-amber-100">
-                <Truck size={18} className="text-amber-700 mx-auto mb-1" />
-                <span className="font-bold block">ঠান্ডা ডেলিভারি</span>
+              <div className="p-3 bg-amber-50/60 rounded-xl border border-amber-100">
+                <Bus size={18} className="text-amber-700 mx-auto mb-1" />
+                <span className="font-bold block">বাসস্টপেজে ডেলিভারি</span>
               </div>
             </div>
           </div>
 
-          {/* ডানপাশ: তথ্য, মূল্য এবং অর্ডার */}
-          <div className="lg:col-span-6 flex flex-col justify-between">
+          {/* ডান কলাম: ক্লায়েন্টের নির্ধারিত সুনির্দিষ্ট স্পেসিফিকেশন ও অর্ডার */}
+          <div className="lg:col-span-7 flex flex-col justify-between">
             <div>
-              {/* সাইজ ও রেটিং */}
-              <div className="flex items-center justify-between gap-2 mb-2">
-                <span className="px-3 py-1 bg-amber-100 text-amber-950 text-xs font-black rounded-lg inline-block">
-                  প্যাকেজ সাইজ: {product.size}
-                </span>
-                <div className="flex items-center gap-1 text-amber-600">
-                  {Array(5).fill('').map((_, idx) => (
-                    <Star
-                      key={idx}
-                      size={14}
-                      fill={rating >= idx + 1 ? 'currentColor' : 'none'}
-                      className={rating >= idx + 1 ? 'text-amber-500' : 'text-slate-300'}
-                    />
-                  ))}
-                  <span className="text-xs font-black text-slate-800 ml-1">
-                    {rating.toFixed(1)} / 5.0
-                  </span>
-                </div>
+              {/* গ্রেড ব্যাজ ও নাম */}
+              <div className="inline-block px-3 py-1 rounded-lg bg-amber-100 text-amber-950 text-xs font-black mb-2">
+                {product.grade}
               </div>
 
-              {/* নাম */}
-              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
                 {product.name}
               </h1>
 
-              {/* মূল্য প্রদর্শন */}
-              <div className="mt-4 p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80">
-                <span className="text-xs font-bold text-slate-500 block">
-                  খুচরা মূল্য
-                </span>
-                <div className="flex items-baseline gap-1 mt-0.5">
-                  <span className="text-3xl font-black text-slate-900">
-                    {currency}{product.price}
-                  </span>
-                  <span className="text-xs text-slate-600 font-bold">/ প্রতি {product.size}</span>
+              {/* ক্লায়েন্টের নির্দিষ্ট কাঠামো অনুযায়ী মূল স্পেসিফিকেশন কার্ড */}
+              <div className="mt-6 bg-amber-50/40 border-2 border-amber-200 rounded-3xl p-5 sm:p-7 shadow-xs">
+                <h3 className="text-xs font-black uppercase tracking-wider text-amber-900 mb-4 pb-2 border-b border-amber-200">
+                  পণ্যের সুনির্দিষ্ট তথ্য (Product Specification)
+                </h3>
+
+                <div className="space-y-3 sm:space-y-3.5 text-sm sm:text-base">
+                  {/* নিট ওজন */}
+                  <div className="flex items-center justify-between py-2 border-b border-amber-100/80">
+                    <span className="text-slate-600 font-bold flex items-center gap-2">
+                      <Scale size={18} className="text-amber-700 shrink-0" />
+                      <span>নিট ওজন:</span>
+                    </span>
+                    <strong className="text-slate-900 font-black text-base">{product.netWeight}</strong>
+                  </div>
+
+                  {/* মাটিসহ ওজন */}
+                  <div className="flex items-center justify-between py-2 border-b border-amber-100/80">
+                    <span className="text-slate-600 font-bold flex items-center gap-2">
+                      <Layers size={18} className="text-amber-700 shrink-0" />
+                      <span>মাটিসহ ওজন:</span>
+                    </span>
+                    <strong className="text-slate-900 font-black text-base">{product.grossWeight}</strong>
+                  </div>
+
+                  {/* পাইকারি মূল্য */}
+                  <div className="flex items-center justify-between py-2.5 px-3 bg-amber-100/70 rounded-2xl border border-amber-300">
+                    <span className="text-amber-950 font-black flex items-center gap-2">
+                      <Coins size={20} className="text-amber-800 shrink-0" />
+                      <span>পাইকারি মূল্য:</span>
+                    </span>
+                    <strong className="text-amber-950 font-black text-xl sm:text-2xl font-mono">
+                      {product.wholesalePrice}
+                    </strong>
+                  </div>
+
+                  {/* খুচরা মূল্য */}
+                  <div className="flex items-center justify-between py-2 border-b border-amber-100/80">
+                    <span className="text-slate-600 font-bold flex items-center gap-2">
+                      <Receipt size={18} className="text-slate-500 shrink-0" />
+                      <span>খুচরা মূল্য:</span>
+                    </span>
+                    <span className="text-slate-700 font-bold text-base line-through">
+                      {product.retailPrice}
+                    </span>
+                  </div>
+
+                  {/* কার্টুন */}
+                  <div className="flex items-center justify-between py-2 border-b border-amber-100/80">
+                    <span className="text-slate-600 font-bold flex items-center gap-2">
+                      <Package size={18} className="text-amber-700 shrink-0" />
+                      <span>কার্টুন:</span>
+                    </span>
+                    <strong className="text-slate-900 font-black text-base">{product.carton}</strong>
+                  </div>
+
+                  {/* Minimum Order */}
+                  <div className="flex items-center justify-between py-2.5 px-3 bg-emerald-50 rounded-2xl border border-emerald-200">
+                    <span className="text-emerald-950 font-black flex items-center gap-2">
+                      <Clock size={18} className="text-emerald-700 shrink-0" />
+                      <span>Minimum Order:</span>
+                    </span>
+                    <strong className="text-emerald-900 font-black text-base sm:text-lg">
+                      {product.minOrder}
+                    </strong>
+                  </div>
                 </div>
-              </div>
-
-              {/* বিবরণ */}
-              <div className="mt-6">
-                <h4 className="text-xs font-black text-slate-500 tracking-wider">
-                  প্রোডাক্টের বিবরণ
-                </h4>
-                <p className="text-sm text-slate-700 mt-2 leading-relaxed font-medium">
-                  {product.description}
-                </p>
-              </div>
-
-              {/* উপাদান ও মেয়াদ */}
-              <div className="mt-6 pt-6 border-t border-slate-100 space-y-2.5 text-xs">
-                {product.ingredients && (
-                  <div className="flex items-start gap-2">
-                    <CheckCircle2 size={16} className="text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900">উপাদানসমূহ:</strong>{' '}
-                      <span className="text-slate-700 font-medium">{product.ingredients}</span>
-                    </div>
-                  </div>
-                )}
-                {product.shelfLife && (
-                  <div className="flex items-start gap-2">
-                    <Calendar size={16} className="text-amber-700 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900">সংরক্ষণ ও মেয়াদের তথ্য:</strong>{' '}
-                      <span className="text-slate-700 font-medium">{product.shelfLife}</span>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
 
-            {/* বাটনসমূহ */}
-            <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row gap-3">
+            {/* বাটনসমূহ ও WhatsApp অর্ডার */}
+            <div className="mt-8 pt-6 border-t border-slate-200 space-y-3">
               <WhatsAppButton
                 product={product}
                 size="lg"
-                label="হোয়াটসঅ্যাপে এটি অর্ডার করুন"
-                className="flex-1 shadow-md font-bold"
+                label="WhatsApp-এ পাইকারি অর্ডার পাঠান"
+                className="w-full !bg-[#25D366] !text-white shadow-md font-black text-base py-4"
               />
-              {isWholesaleEligible && (
-                <a
-                  href={getWhatsAppWholesaleUrl(`${product.name} (${product.size}) এর পাইকারি/অনুষ্ঠান অর্ডারের তথ্য`)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-6 py-3.5 rounded-2xl bg-amber-100 hover:bg-amber-200 text-amber-950 font-black text-sm transition text-center"
-                >
-                  পাইকারি কোটেশন চান
-                </a>
-              )}
-            </div>
 
-            <p className="text-[11px] text-slate-500 text-center sm:text-left mt-3 font-medium">
-              💡 আমাদের অটোমেটেড হোয়াটসঅ্যাপে সরাসরি যোগাযোগ করে মুহূর্তেই অর্ডার কনফার্ম করুন।
-            </p>
+              <div className="p-3 bg-stone-900 text-amber-200 rounded-xl text-xs font-mono leading-relaxed text-center">
+                অর্ডার ফরম্যাট: {product.name} + পরিমাণ + ক্রেতার নাম + ১১ সংখ্যার মোবাইল নম্বর + সম্পূর্ণ ঠিকানা
+              </div>
+
+              <p className="text-xs text-slate-500 text-center font-medium">
+                💡 প্রতিদিন সকাল ১০টার আগে অর্ডার নিশ্চিত করুন। ৩০% অগ্রিম সাপেক্ষে নিজস্ব কারখানায় প্রস্তুত করা হবে।
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* সম্পর্কিত অন্যান্য দই */}
+      {/* সম্পর্কিত অন্যান্য পণ্য */}
       {relatedProducts && relatedProducts.length > 0 && (
         <div className="mt-16 sm:mt-20">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-                সম্পর্কিত অন্যান্য দই
+                সম্পর্কিত অন্যান্য পাইকারি পণ্য
               </h3>
               <p className="text-xs text-slate-500 mt-0.5 font-medium">
-                একই ক্যাটাগরির আরও খাঁটি দইয়ের পছন্দ
+                একই ক্যাটাগরির সুনির্দিষ্ট স্পেসিফিকেশনের পণ্যসমূহ
               </p>
             </div>
             <Link
               href="/#products"
               className="text-xs font-extrabold text-amber-800 hover:text-amber-950 transition"
             >
-              সম্পূর্ণ দই তালিকা &rarr;
+              সম্পূর্ণ তালিকা &rarr;
             </Link>
           </div>
 

@@ -33,13 +33,13 @@ export default function FourMainProducts({ onSelectCategory }) {
       <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100/80 border border-amber-300/80 text-amber-950 text-xs font-black tracking-wide mb-3 shadow-2xs">
           <Sparkles size={14} className="text-amber-700" />
-          <span>নকশী দই ভাণ্ডারের বিশেষত্ব</span>
+          <span>নকশি দই ভান্ডারের ৪টি প্রধান পণ্য</span>
         </div>
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-          আমাদের ৪টি মূল ঐতিহ্যবাহী পণ্য
+          আমাদের প্রধান ৪টি ঐতিহ্যবাহী পণ্য (A & B Grade)
         </h2>
         <p className="mt-3 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
-          নিজস্ব কারখানায় শতভাগ খাঁটি তরল গরুর দুধে স্বাস্থ্যসম্মত উপায়ে প্রস্তুত। পছন্দের পণ্যে ক্লিক করে সম্পূর্ণ সম্ভার ও মূল্যতালিকা দেখুন।
+          নিজস্ব কারখানায় শতভাগ খাঁটি তরল গরুর দুধে স্বাস্থ্যসম্মত উপায়ে প্রস্তুত। যেকোনো পণ্যে ক্লিক করে সম্পূর্ণ পাইকারি সম্ভার ও মূল্য দেখুন।
         </p>
       </div>
 

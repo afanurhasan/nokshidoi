@@ -4,21 +4,23 @@ import React from 'react';
 import Title from './Title';
 import { BUSINESS_CONFIG } from '@/config/business';
 import {
-  Milk,
-  Sparkles,
-  CheckCircle2,
-  ShoppingBag,
+  ShieldCheck,
+  Factory,
+  Award,
   Truck,
+  Coins,
   MessageCircle,
+  Sparkles,
 } from 'lucide-react';
 
 const ICON_MAP = {
-  Milk,
-  Sparkles,
-  CheckCircle2,
-  ShoppingBag,
+  ShieldCheck,
+  Factory,
+  Award,
   Truck,
+  Coins,
   MessageCircle,
+  Sparkles,
 };
 
 export default function OurSpec() {
@@ -27,10 +29,10 @@ export default function OurSpec() {
   return (
     <section id="why-us" className="py-16 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto">
       <Title
-        badge="বিশুদ্ধতা ও ঐতিহ্য"
-        title="কেন নকশী দই বেছে নেবেন?"
-        subtitle="আমাদের বিশেষত্ব ও খাঁটি স্বাদের অঙ্গীকার"
-        description="আমরা বগুড়ার আদি কারিগরি বজায় রেখে কোনো কৃত্রিম পাউডার বা ক্ষতিকর ঘনকারক ছাড়াই খাঁটি তরল দুধ ও পোড়ামাটির পাত্রে স্বাস্থ্যসম্মত দই প্রস্তুত করি।"
+        badge="ঐতিহ্য ও পেশাদারিত্ব"
+        title="কেন নকশি দই ভান্ডার বেছে নেবেন?"
+        subtitle="আমাদের বিশেষত্ব ও পাইকারি সরবরাহের নির্ভরযোগ্যতা"
+        description="বগুড়ার শত বছরের ঐতিহ্যবাহী রেসিপি, BSTI অনুমোদন, নিজস্ব দুগ্ধ কারখানা ও দেশব্যাপী নিরাপদ বাস রুটে পাইকারি সরবরাহ ব্যবস্থা।"
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-12 sm:mt-16">

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Title from './Title';
 import { BUSINESS_CONFIG } from '@/config/business';
 import WhatsAppButton from './WhatsAppButton';
-import { ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, Factory, Award, Building } from 'lucide-react';
 
 export default function AboutSection() {
   return (
@@ -24,23 +24,23 @@ export default function AboutSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
                 <span className="text-amber-400 text-xs font-black uppercase tracking-wider">
-                  হাতে তৈরি ঐতিহ্যবাহী খাবার
+                  নিজস্ব কারখানায় স্বাস্থ্যসম্মত উৎপাদন
                 </span>
-                <h4 className="text-xl font-black mt-1">মাটির হাঁড়িতে প্রাকৃতিক গাঁজন</h4>
+                <h4 className="text-xl font-black mt-1">ঐতিহ্যবাহী বগুড়ার আসল কারিগরি</h4>
                 <p className="text-xs text-amber-100/90 mt-1 font-medium">
-                  ছিদ্রযুক্ত পোড়ামাটির পাত্র বাড়তি পানি শুষে নিয়ে খাঁটি দুধের ঘন সর তৈরি করে।
+                  পোড়ামাটির ছিদ্রযুক্ত পাত্র ও খাঁটি তরল দুধে প্রাকৃতিকভাবে জমানো ঘন সুস্বাদু দই।
                 </p>
               </div>
             </div>
 
             {/* ভাসমান ব্যাজ */}
-            <div className="absolute -bottom-5 -right-2 sm:right-6 bg-white border border-amber-200 rounded-2xl p-4 shadow-xl max-w-[200px] z-10 hidden sm:block">
-              <div className="flex items-center gap-2 text-amber-700">
+            <div className="absolute -bottom-5 -right-2 sm:right-6 bg-white border border-amber-200 rounded-2xl p-4 shadow-xl max-w-[210px] z-10 hidden sm:block">
+              <div className="flex items-center gap-2 text-amber-800">
                 <ShieldCheck size={20} />
-                <span className="text-xs font-black text-slate-900">শূন্য কেমিক্যাল</span>
+                <span className="text-xs font-black text-slate-900">BSTI ও ভ্যাট নিবন্ধিত</span>
               </div>
               <p className="text-[10px] text-slate-600 mt-1 leading-tight font-medium">
-                কোনো কৃত্রিম ঘনকারক, স্টার্চ বা রঙ ব্যবহার করা হয় না।
+                প্রয়োজনীয় সরকারি অনুমোদন ও কাগজপত্রসহ শতভাগ নিরাপদ ও বিশ্বস্ত।
               </p>
             </div>
           </div>
@@ -50,53 +50,53 @@ export default function AboutSection() {
             <Title
               align="left"
               badge={`“${BUSINESS_CONFIG.motto}”`}
-              title="বিশুদ্ধতায় লক্ষ্য, তৃপ্তিতেই সন্তুষ্টি"
-              subtitle="সরাসরি কারখানা থেকে পাইকারি সরবরাহ, সারা বাংলাদেশে ডেলিভারি"
+              title="বগুড়ার ঐতিহ্যবাহী স্বাদ, পেশাদার পাইকারি সরবরাহের ঠিকানা"
+              subtitle="বগুড়াভিত্তিক দুগ্ধজাত খাদ্য উৎপাদন ও সরবরাহকারী প্রতিষ্ঠান"
             />
 
-            <div className="mt-6 space-y-4 text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
+            <div className="mt-6 space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
               <p>
-                <strong>{BUSINESS_CONFIG.name}</strong>-এর মূল লক্ষ্য হলো ভেজালমুক্ত খাঁটি দুধের প্রাকৃতিক স্বাদ মানুষের ঘরে ঘরে পৌঁছে দেওয়া। বগুড়ার ঐতিহ্যবাহী রেসিপি অনুযায়ী আমরা বিশ্বাস করি, আসল স্বাদের দই কোনো কৃত্রিম শর্টকাট দিয়ে তৈরি করা যায় না।
+                <strong>{BUSINESS_CONFIG.name}</strong> বগুড়াভিত্তিক একটি প্রতিষ্ঠিত দুগ্ধজাত খাদ্য উৎপাদন ও পাইকারি সরবরাহকারী প্রতিষ্ঠান। নিজস্ব কারখানায় প্রতিদিনের তাজা দুধে তৈরি হয় দই, মিষ্টি, রসমালাই, মাঠা, ঘোল ও খাঁটি গাওয়া ঘিসহ ঐতিহ্যবাহী খাদ্যপণ্য।
               </p>
               <p>
-                আমাদের প্রতিটি হাঁড়ি তৈরি হয় <strong>১০০% খাঁটি তরল গরুর দুধে</strong>। খাঁটি খামারি দুধ বড় কড়াইয়ে দীর্ঘক্ষণ জ্বাল দিয়ে প্রাকৃতিক সোনালী ক্যারামেল স্বাদ আনা হয়। এরপর স্বাস্থ্যসম্মতভাবে পরিচ্ছন্ন মাটির পাত্রে জমানো হয়।
+                দেশব্যাপী ব্যবসায়ী, হোটেল, রেস্টুরেন্ট, সুপারশপ, ক্যাটারিং, রিসেলার, অনলাইন ব্যবসা, গার্মেন্টস ফ্যাক্টরি ও বিভিন্ন করপোরেট প্রতিষ্ঠানে আমরা নিয়মিত বিশ্বস্ততার সাথে পাইকারি সরবরাহ পরিচালনা করি।
               </p>
               <p>
-                আপনার পারিবারিক আয়োজনে একটি ছোট মিষ্টির পাত্র হোক কিংবা শুভ বিবাহের জন্য শত শত হাঁড়ি—আমরা প্রতিটি ব্যাচ তাজা ও ঠান্ডা অবস্থায় নির্দিষ্ট সময়ে পৌঁছে দিতে দায়বদ্ধ।
+                গ্রাহক ও প্রতিষ্ঠানের নির্দিষ্ট চাহিদা ও বাজেটের কথা বিবেচনা করে আমাদের পণ্য <strong>A Grade (High Quality)</strong> ও <strong>B Grade (Medium Quality)</strong>-তে সরবরাহ করা হয়। <em>আমরা কোনো প্রকার Low Quality পণ্য নিয়মিত পণ্যমান হিসেবে রাখি না।</em>
               </p>
             </div>
 
-            {/* প্রধান অঙ্গীকার */}
+            {/* প্রধান ৪টি অঙ্গীকার */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-6 pt-6 border-t border-amber-100">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
                 <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                <span>প্রতিদিনের তাজা দুধের ব্যাচ</span>
+                <span>BSTI ও সরকারি ভ্যাট-ট্যাক্স প্রত্যয়িত</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
                 <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                <span>কঠোর স্বাস্থ্যসম্মত প্রস্তুতি</span>
+                <span>নিজস্ব দুগ্ধ কারখানায় হাইজিন উৎপাদন</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
                 <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                <span>খুচরা হোম ডেলিভারি ও পাইকারি</span>
+                <span>দেশব্যাপী নির্ধারিত প্যাসেঞ্জার বাস রুট</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
                 <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                <span>সার্বক্ষণিক হোয়াটসঅ্যাপ সেবা</span>
+                <span>গার্মেন্টস ও প্রতিষ্ঠানে বাল্ক সরবরাহ</span>
               </div>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <WhatsAppButton
                 size="md"
-                label="হোয়াটসঅ্যাপে আমাদের সাথে কথা বলুন"
-                customText="আসসালামু আলাইকুম নকশী দই! আমি আপনাদের পণ্য ও অর্ডার সম্পর্কে বিস্তারিত জানতে চাই।"
+                label="অফিশিয়াল WhatsApp-এ যোগাযোগ করুন"
+                customText="আসসালামু আলাইকুম নকশি দই ভান্ডার! আমি আপনাদের পণ্য উৎপাদন ও পাইকারি সরবরাহ সম্পর্কে বিস্তারিত জানতে চাই।"
               />
               <a
-                href="#products"
-                className="px-6 py-2.5 rounded-xl border border-slate-300 text-slate-800 hover:bg-slate-50 font-bold text-sm transition"
+                href="#order-process"
+                className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-800 hover:bg-slate-50 font-bold text-xs sm:text-sm transition"
               >
-                দই তালিকা দেখুন
+                অর্ডার ও পেমেন্ট ধাপ
               </a>
             </div>
           </div>

@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { BUSINESS_CONFIG } from '@/config/business';
+import { Phone, MapPin, Bus, ShieldCheck } from 'lucide-react';
 
 const FacebookIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2">
@@ -42,14 +43,14 @@ export default function Footer() {
     <footer className="bg-stone-950 text-slate-400 text-xs border-t border-stone-800">
       {/* মূল ফুটার অংশ */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-stone-800/80 text-center md:text-left">
-          {/* ব্র্যান্ড বিবরণ */}
-          <div className="space-y-3 max-w-lg">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-stone-800/80">
+          {/* কলাম ১: ব্র্যান্ড বিবরণ (৫ কলাম) */}
+          <div className="md:col-span-5 space-y-3">
             <Link href="/" className="inline-flex items-center gap-3 group">
               <div className="bg-white p-2 rounded-xl shadow-md inline-flex items-center justify-center">
                 <img
                   src="/logo.png"
-                  alt="নকশী দই ভাণ্ডার লোগো"
+                  alt="নকশি দই ভান্ডার লোগো"
                   className="h-11 w-auto object-contain group-hover:scale-105 transition-transform"
                 />
               </div>
@@ -66,26 +67,56 @@ export default function Footer() {
             <p className="text-xs leading-relaxed text-stone-400 font-medium">
               {BUSINESS_CONFIG.shortDescription}
             </p>
+
+            <div className="flex items-center gap-2 pt-1 text-amber-300 text-xs font-bold">
+              <ShieldCheck size={16} />
+              <span>BSTI অনুমোদিত ও সরকারি ভ্যাট-ট্যাক্স প্রত্যয়িত</span>
+            </div>
           </div>
 
-          {/* সোশ্যাল লিংক */}
-          <div className="flex flex-col items-center md:items-end gap-2.5">
-            <p className="text-[11px] font-black text-stone-300 uppercase tracking-wider">
-              সোশ্যাল মিডিয়ায় যুক্ত থাকুন
+          {/* কলাম ২: প্রয়োজনীয় লিংক (৩ কলাম) */}
+          <div className="md:col-span-3 space-y-2.5">
+            <h4 className="text-xs font-black text-white uppercase tracking-wider">গুরুত্বপূর্ণ তথ্য</h4>
+            <ul className="space-y-2 text-stone-400 font-medium">
+              <li><Link href="/#products" className="hover:text-amber-400 transition">আমাদের পণ্য সম্ভার</Link></li>
+              <li><Link href="/#order-process" className="hover:text-amber-400 transition">৫-ধাপের অর্ডার প্রসেস</Link></li>
+              <li><Link href="/#delivery-routes" className="hover:text-amber-400 transition">প্যাসেঞ্জার বাস রুটসমূহ</Link></li>
+              <li><Link href="/#contact" className="hover:text-amber-400 transition">যোগাযোগ ও শোরুম</Link></li>
+            </ul>
+          </div>
+
+          {/* কলাম ৩: ঠিকানা ও সোশ্যাল (৪ কলাম) */}
+          <div className="md:col-span-4 space-y-3">
+            <h4 className="text-xs font-black text-white uppercase tracking-wider">যোগাযোগ ও শোরুম</h4>
+            <p className="text-stone-400 flex items-start gap-2">
+              <MapPin size={15} className="text-amber-400 shrink-0 mt-0.5" />
+              <span>{BUSINESS_CONFIG.showroomAddress} (খুচরা বিক্রয় শুধুমাত্র শোরুমে)</span>
             </p>
-            <div className="flex items-center gap-2.5">
-              {socialLinksList.map((item, i) => (
-                <a
-                  key={i}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={item.name}
-                  className="size-10 rounded-xl bg-white hover:bg-amber-50 flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-sm hover:shadow-md"
-                >
-                  <item.icon />
-                </a>
-              ))}
+            <p className="text-stone-400 flex items-center gap-2">
+              <Phone size={15} className="text-amber-400 shrink-0" />
+              <span>পাইকারি WhatsApp: <strong className="text-white font-mono">{BUSINESS_CONFIG.whatsappNumberDisplay}</strong></span>
+            </p>
+            <p className="text-stone-400 flex items-center gap-2">
+              <Bus size={15} className="text-amber-400 shrink-0" />
+              <span>প্যাসেঞ্জার বাসে দেশব্যাপী নির্ধারিত স্টপেজে সরবরাহ</span>
+            </p>
+
+            <div className="pt-2">
+              <span className="text-[11px] font-bold text-stone-400 block mb-2">সোশ্যাল মিডিয়া:</span>
+              <div className="flex items-center gap-2.5">
+                {socialLinksList.map((item, i) => (
+                  <a
+                    key={i}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={item.name}
+                    className="size-9 rounded-xl bg-white hover:bg-amber-50 flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-sm"
+                  >
+                    <item.icon />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -96,7 +127,7 @@ export default function Footer() {
             &copy; {currentYear} <strong>{BUSINESS_CONFIG.name}</strong>। সর্বস্বত্ব সংরক্ষিত।
           </p>
           <p>
-            &ldquo;{BUSINESS_CONFIG.motto}&rdquo; • সারা বাংলাদেশে পাইকারি ডেলিভারি
+            {BUSINESS_CONFIG.motto}
           </p>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, Award, ShieldCheck, Check } from 'lucide-react';
+import { ArrowRight, Sparkles, Award, ShieldCheck, Check, Bus, Factory } from 'lucide-react';
 import { BUSINESS_CONFIG } from '@/config/business';
 import WhatsAppButton from './WhatsAppButton';
 
@@ -18,11 +18,17 @@ export default function Hero() {
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* বাম কলাম: টেক্সট, হাইলাইটস, বাটন ও ট্রাস্ট ব্যাজ (৭ কলাম) */}
           <div className="lg:col-span-7 flex flex-col justify-center">
+            {/* মূল মোটো ব্যাজ */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-200/80 text-amber-900 border border-amber-300 text-xs font-black w-fit mb-3">
+              <Sparkles size={14} className="text-amber-800" />
+              <span>{BUSINESS_CONFIG.motto}</span>
+            </div>
+
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-[1.2]">
-              বগুড়ার শেরপুরের ঐতিহ্যবাহী খাঁটি <span className="text-amber-800">দই, মিষ্টি, রসমালাই ও মাঠা</span>
+              {BUSINESS_CONFIG.name} — <span className="text-amber-800">বগুড়ার ঐতিহ্যবাহী স্বাদ, পেশাদার পাইকারি সরবরাহের ঠিকানা</span>
             </h1>
 
-            <p className="mt-4 text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
+            <p className="mt-4 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
               {BUSINESS_CONFIG.shortDescription}
             </p>
 
@@ -30,9 +36,9 @@ export default function Hero() {
             <div className="mt-5 flex flex-wrap gap-2 text-xs font-bold text-slate-800">
               {[
                 { name: 'দই', id: 'doi', icon: '🍶' },
-                { name: 'মিষ্টি', id: 'mishti', icon: '🍯' },
                 { name: 'রসমালাই', id: 'rasmalai', icon: '🥣' },
-                { name: 'মাঠা', id: 'matha', icon: '🥛' },
+                { name: 'মিষ্টি', id: 'mishti', icon: '🍯' },
+                { name: 'মাঠা ও ঘোল', id: 'matha', icon: '🥛' },
               ].map((item) => (
                 <button
                   key={item.id}
@@ -55,41 +61,45 @@ export default function Hero() {
             <div className="mt-7 flex flex-wrap items-center gap-3 sm:gap-4">
               <WhatsAppButton
                 size="lg"
-                label="হোয়াটসঅ্যাপে অর্ডার করুন"
+                label="পাইকারি অর্ডারের জন্য WhatsApp"
                 className="!bg-[#25D366] !text-white shadow-md hover:scale-102 font-bold"
               />
               <Link
-                href="#products"
-                className="inline-flex items-center gap-2 bg-slate-900 hover:bg-black text-white px-6 py-3.5 rounded-2xl font-bold text-sm transition-all shadow-sm active:scale-95"
+                href="#order-process"
+                className="inline-flex items-center gap-2 bg-slate-900 hover:bg-black text-white px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all shadow-sm active:scale-95"
               >
-                <span>সব পণ্য দেখুন</span>
-                <ArrowRight size={16} />
+                <span>৫-ধাপের অর্ডার প্রসেস</span>
+                <ArrowRight size={15} />
               </Link>
             </div>
 
-            {/* বিশ্বস্ততার ৩টি প্রতীক */}
-            <div className="mt-8 pt-6 border-t border-amber-200/70 grid grid-cols-3 gap-3 text-slate-800 text-xs sm:text-sm">
-              <div className="flex items-center gap-2">
-                <ShieldCheck size={18} className="text-amber-700 shrink-0" />
-                <span className="font-bold text-slate-900">১০০% খাঁটি দুধ</span>
+            {/* বিশ্বস্ততার মূল ৪টি প্রতীক */}
+            <div className="mt-8 pt-6 border-t border-amber-200/70 grid grid-cols-2 sm:grid-cols-4 gap-3 text-slate-800 text-[11px] sm:text-xs">
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck size={16} className="text-amber-800 shrink-0" />
+                <span className="font-extrabold text-slate-900">BSTI ও ভ্যাট ট্যাক্স</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Sparkles size={18} className="text-amber-700 shrink-0" />
-                <span className="font-bold text-slate-900">মাটির হাঁড়িতে জমানো</span>
+              <div className="flex items-center gap-1.5">
+                <Factory size={16} className="text-amber-800 shrink-0" />
+                <span className="font-extrabold text-slate-900">নিজস্ব দুগ্ধ কারখানা</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Award size={18} className="text-amber-700 shrink-0" />
-                <span className="font-bold text-slate-900">পাইকারী ও খুচরা</span>
+              <div className="flex items-center gap-1.5">
+                <Award size={16} className="text-amber-800 shrink-0" />
+                <span className="font-extrabold text-slate-900">A & B Grade মান</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Bus size={16} className="text-amber-800 shrink-0" />
+                <span className="font-extrabold text-slate-900">প্যাসেঞ্জার বাস রুট</span>
               </div>
             </div>
           </div>
 
-          {/* ডান কলাম: ১৬:৯ অফিশিয়াল ব্যানার ইমেজ (৫ কলাম, কোনো অতিরিক্ত বক্স ছাড়া) */}
+          {/* ডান কলাম: ১৬:৯ অফিশিয়াল ব্যানার ইমেজ */}
           <div className="lg:col-span-5 w-full flex items-center justify-center">
             <div className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-white group hover:shadow-2xl transition-all duration-300 aspect-[16/9]">
               <img
                 src="/hero.jpeg"
-                alt="নকশী দই ভাণ্ডার অফিশিয়াল ব্যানার"
+                alt="নকশি দই ভান্ডার অফিশিয়াল ব্যানার"
                 className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
               />
             </div>

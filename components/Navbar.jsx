@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 import { BUSINESS_CONFIG } from '@/config/business';
 import WhatsAppButton from './WhatsAppButton';
@@ -10,7 +9,6 @@ import WhatsAppButton from './WhatsAppButton';
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
   const [activeItem, setActiveItem] = useState('');
 
   useEffect(() => {
@@ -21,23 +19,11 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleCategoryEvent = (e) => {
-      if (e.detail) {
-        setActiveItem(e.detail);
-      }
-    };
-    window.addEventListener('select-product-category', handleCategoryEvent);
-    return () => window.removeEventListener('select-product-category', handleCategoryEvent);
-  }, []);
-
   const navLinks = [
     { name: 'হোম', href: '/' },
-    { name: 'দই', href: '/#products', catId: 'doi' },
-    { name: 'মিষ্টি', href: '/#products', catId: 'mishti' },
-    { name: 'রসমালাই', href: '/#products', catId: 'rasmalai' },
-    { name: 'মাঠা', href: '/#products', catId: 'matha' },
-    { name: 'পাইকারি অর্ডার', href: '/#wholesale' },
+    { name: 'পণ্য সম্ভার', href: '/#products' },
+    { name: 'অর্ডার ধাপ', href: '/#order-process' },
+    { name: 'বাস রুট ও পরিবহন', href: '/#delivery-routes' },
     { name: 'যোগাযোগ', href: '/#contact' },
   ];
 
@@ -45,12 +31,7 @@ export default function Navbar() {
     setMobileMenuOpen(false);
     if (typeof window === 'undefined') return;
 
-    if (link.catId) {
-      setActiveItem(link.catId);
-      sessionStorage.setItem('selected-category', link.catId);
-    } else {
-      setActiveItem(link.href);
-    }
+    setActiveItem(link.href);
 
     const isHome = window.location.pathname === '/';
 
@@ -67,9 +48,6 @@ export default function Navbar() {
           el.scrollIntoView({ behavior: 'smooth' });
           window.history.pushState(null, '', link.href);
         }
-        if (link.catId) {
-          window.dispatchEvent(new CustomEvent('select-product-category', { detail: link.catId }));
-        }
       }
     }
   };
@@ -78,18 +56,10 @@ export default function Navbar() {
     <>
       {/* শীর্ষ নোটিফিকেশন বার */}
       <div className="bg-amber-950 text-amber-50 text-xs py-2 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+        <div className="max-w-7xl mx-auto text-center">
           <p className="font-medium tracking-wide">
-            🍶 <span className="font-bold text-amber-300">নকশী দই ভাণ্ডার:</span> &ldquo;{BUSINESS_CONFIG.motto}&rdquo; | সারা বাংলাদেশে পাইকারি ডেলিভারি
+            🍶 <span className="font-bold text-amber-300">নকশি দই ভান্ডার:</span> {BUSINESS_CONFIG.motto}
           </p>
-          <div className="flex items-center gap-3 text-[11px] font-medium">
-            <a
-              href={`tel:${BUSINESS_CONFIG.showroomPhoneRaw}`}
-              className="hover:text-amber-200 text-amber-300 transition font-bold"
-            >
-              শোরুম: {BUSINESS_CONFIG.showroomPhone}
-            </a>
-          </div>
         </div>
       </div>
 
@@ -105,30 +75,30 @@ export default function Navbar() {
             <div className="relative h-12 sm:h-14 w-auto flex items-center">
               <img
                 src="/logo.png"
-                alt="নকশী দই ভাণ্ডার লোগো"
+                alt="নকশি দই ভান্ডার লোগো"
                 className="h-12 sm:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
               />
             </div>
             <div className="hidden sm:flex flex-col">
               <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 leading-none">
-                নকশী দই ভাণ্ডার
+                {BUSINESS_CONFIG.name}
               </span>
               <span className="text-[10px] tracking-wide text-amber-800 font-bold mt-1">
-                “বিশুদ্ধতায় লক্ষ্য, তৃপ্তিতেই সন্তুষ্টি”
+                ঐতিহ্যের স্বাদ • নিজস্ব উৎপাদন • পাইকারি সরবরাহ
               </span>
             </div>
           </Link>
 
           {/* ডেক্সটপ মেনু লিংক */}
-          <div className="hidden lg:flex items-center gap-6 xl:gap-7 text-sm font-bold text-slate-700">
+          <div className="hidden lg:flex items-center gap-5 xl:gap-6 text-xs xl:text-sm font-bold text-slate-700">
             {navLinks.map((link, idx) => {
-              const isActive = activeItem === (link.catId || link.href);
+              const isActive = activeItem === link.href;
               return (
                 <Link
                   key={idx}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link)}
-                  className={`transition-colors py-1 relative ${
+                  className={`transition-colors py-1 relative whitespace-nowrap ${
                     isActive ? 'text-amber-800 font-extrabold' : 'hover:text-amber-700'
                   }`}
                 >
@@ -145,7 +115,7 @@ export default function Navbar() {
           <div className="hidden sm:flex items-center gap-3">
             <WhatsAppButton
               size="md"
-              label="হোয়াটসঅ্যাপে অর্ডার করুন"
+              label="পাইকারি অর্ডার"
               className="rounded-full shadow-xs font-bold"
             />
           </div>
@@ -170,9 +140,9 @@ export default function Navbar() {
         {/* মোবাইল মেনু ড্রয়ার */}
         {mobileMenuOpen && (
           <div className="lg:hidden bg-white border-b border-amber-100 px-6 py-5 shadow-lg animate-in slide-in-from-top duration-200">
-            <div className="flex flex-col space-y-3 text-sm font-bold text-slate-800">
+            <div className="flex flex-col space-y-2.5 text-sm font-bold text-slate-800">
               {navLinks.map((link, idx) => {
-                const isActive = activeItem === (link.catId || link.href);
+                const isActive = activeItem === link.href;
                 return (
                   <Link
                     key={idx}
@@ -190,11 +160,14 @@ export default function Navbar() {
               })}
             </div>
 
-            <div className="mt-5 pt-4 border-t border-slate-100 flex flex-col gap-3">
+            <div className="mt-5 pt-4 border-t border-slate-100 flex flex-col gap-2.5">
+              <div className="text-xs text-slate-600 font-medium">
+                খুচরা বিক্রয়: শোরুম (কলেজ রোড, শেরপুর, বগুড়া)
+              </div>
               <WhatsAppButton
                 size="md"
-                label="সরাসরি হোয়াটসঅ্যাপ অর্ডার"
-                className="w-full text-center"
+                label="অফিশিয়াল WhatsApp-এ অর্ডার দিন"
+                className="w-full text-center font-bold"
               />
             </div>
           </div>

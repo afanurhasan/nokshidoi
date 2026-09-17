@@ -4,25 +4,25 @@ import React from 'react';
 import Image from 'next/image';
 import { BUSINESS_CONFIG, getWhatsAppWholesaleUrl } from '@/config/business';
 import WhatsAppButton from './WhatsAppButton';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Clock, Truck, Award, Building2 } from 'lucide-react';
 
 export default function WholesaleSection() {
   const benefits = [
     {
-      title: "বিয়ে ও মেজবানি আয়োজন",
-      desc: "১০০ থেকে ৫,০০০+ মেহমানের জন্য ৫ ও ১০ কেজির সুসজ্জিত ঐতিহ্যবাহী বড় মাটির হাঁড়ি ও কাপ সরবরাহ।",
+      title: "হোটেল, রেস্তোরাঁ ও সুপারশপ",
+      desc: "প্রতিদিন রান্নার ঘন টক দই, মিষ্টি দই ও রসমালাইয়ের নিয়মিত ও নির্ভরযোগ্য পাইকারি সরবরাহ।",
     },
     {
-      title: "রেস্তোরাঁ ও মিষ্টির দোকান",
-      desc: "প্রতিদিন সকালে রান্নার ঘন টক দই ও স্পেশাল মিষ্টি দইয়ের নির্ভরযোগ্য ও সুলভ পাইকারি সরবরাহ।",
+      title: "গার্মেন্টস ফ্যাক্টরি ও করপোরেট ইভেন্ট",
+      desc: "শতাধিক থেকে হাজার হাজার কর্মীর জন্য স্বাস্থ্যসম্মত ও পরিচ্ছন্ন পরিবেশে বিশেষ ব্যাচ উৎপাদন।",
     },
     {
-      title: "করপোরেট উপহার ও গিফট হ্যাম্পার",
-      desc: "উৎসবের শুভেচ্ছা জানাতে বিশেষ বাঁশের ডালায় বর-কনে বা প্রতিষ্ঠানের নাম খোদাই করা নকশী হাঁড়ি।",
+      title: "বিয়ে, মেজবান ও সামাজিক উৎসব",
+      desc: "১০০ থেকে ৫,০০০+ মেহমানের জন্য ৫ ও ১০ কেজির মাটির হাঁড়ি, কাপ দই ও স্পেশাল মিষ্টির ডালি।",
     },
     {
-      title: "সময়মতো ঠান্ডা ও অক্ষত ডেলিভারি",
-      desc: "বিশেষ শক-প্রুফ খাঁচায় পরিবহনের কারণে একটি হাঁড়িও ভাঙে না এবং দই থাকে ঠান্ডা ও জমাট।",
+      title: "রিসেলার ও অনলাইন ব্যবসা",
+      desc: "নিজস্ব শপ বা অনলাইন ডেলিভারি বিজনেসের জন্য বগুড়ার আসল স্বাদের দুগ্ধজাত পণ্যের নিয়মিত জোগান।",
     },
   ];
 
@@ -40,17 +40,22 @@ export default function WholesaleSection() {
                 &ldquo;{BUSINESS_CONFIG.motto}&rdquo;
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
-                সরাসরি কারখানা থেকে পাইকারি সরবরাহ, <span className="text-amber-400">সারা বাংলাদেশে ডেলিভারি</span>
+                দেশব্যাপী পাইকারি সরবরাহ, <span className="text-amber-400">সরাসরি বগুড়ার কারখানা থেকে</span>
               </h2>
               <p className="mt-4 text-amber-100/90 text-sm sm:text-base leading-relaxed max-w-xl font-medium">
                 {BUSINESS_CONFIG.wholesale.description}
               </p>
-              <p className="mt-2 text-xs text-amber-300 font-bold">
-                {BUSINESS_CONFIG.wholesale.minimumOrderNotice}
-              </p>
+
+              {/* লিড টাইম নোটিশ বক্স */}
+              <div className="mt-4 p-3.5 bg-amber-950/70 border border-amber-500/40 rounded-xl max-w-xl flex items-start gap-2.5">
+                <Clock size={18} className="text-amber-400 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-200 leading-relaxed font-bold">
+                  {BUSINESS_CONFIG.wholesale.minimumOrderNotice}
+                </p>
+              </div>
 
               {/* সুবিধাসমূহ */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                 {benefits.map((b, i) => (
                   <div key={i} className="flex items-start gap-2.5">
                     <CheckCircle2 size={18} className="text-amber-400 shrink-0 mt-0.5" />
@@ -63,13 +68,19 @@ export default function WholesaleSection() {
               </div>
 
               {/* বাটনসমূহ */}
-              <div className="mt-10 flex flex-wrap items-center gap-4">
+              <div className="mt-8 flex flex-wrap items-center gap-4">
                 <WhatsAppButton
                   isWholesale={true}
                   size="lg"
                   label={BUSINESS_CONFIG.wholesale.ctaText}
-                  className="!bg-[#25D366] !text-white shadow-lg"
+                  className="!bg-[#25D366] !text-white shadow-lg font-bold"
                 />
+                <a
+                  href="#delivery-routes"
+                  className="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs sm:text-sm transition"
+                >
+                  বাস রুটসমূহ দেখুন
+                </a>
               </div>
             </div>
 
@@ -84,9 +95,9 @@ export default function WholesaleSection() {
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-6">
-                  <span className="text-amber-400 font-bold text-xs">ঐতিহ্যবাহী নকশী মাটির পাত্র</span>
-                  <h4 className="text-white text-lg font-black">৫ কেজি ও ১০ কেজির মেগা হাঁড়ি</h4>
-                  <p className="text-xs text-slate-300 mt-1">অনুষ্ঠানের ২৪-৪৮ ঘণ্টা পূর্বে প্রি-অর্ডারে বিশেষ সুবিধা</p>
+                  <span className="text-amber-400 font-bold text-xs">ঐতিহ্যবাহী বগুড়ার মাটির হাঁড়ি</span>
+                  <h4 className="text-white text-lg font-black">A Grade ও B Grade স্পেশাল বাল্ক হাঁড়ি</h4>
+                  <p className="text-xs text-slate-300 mt-1">ব্যবসায়ী, গার্মেন্টস ও বড় প্রতিষ্ঠানের জন্য প্রতিদিনের তাজা ব্যাচ</p>
                 </div>
               </div>
             </div>
