@@ -173,10 +173,18 @@ export default function OrderProcessSection() {
                 (অগ্রিম ৩০% ও গাড়ি ছাড়ার পূর্বে বাকি ৭০% এবং প্রযোজ্য রোড ভাড়া এই নম্বরগুলোতে পরিশোধযোগ্য)
               </p>
 
+              {/* প্রতারণা সতর্কতা বক্স */}
+              <div className="w-full bg-rose-950/60 border border-rose-500/40 rounded-xl p-2.5 text-left flex items-start gap-2 text-rose-100">
+                <AlertTriangle size={15} className="text-rose-400 shrink-0 mt-0.5" />
+                <p className="text-[11px] leading-tight">
+                  <strong className="text-rose-300">প্রতারণা থেকে সতর্কতা:</strong> অর্ডার ও পেমেন্টের আগে শুধুমাত্র আমাদের অনুমোদিত নম্বরে তথ্য যাচাই করে নিন।
+                </p>
+              </div>
+
               <WhatsAppButton
                 size="lg"
                 label="WhatsApp-এ অর্ডার ফরম্যাট পাঠান"
-                className="w-full !bg-[#25D366] !text-white shadow-lg font-black mt-2"
+                className="w-full !bg-[#25D366] !text-white shadow-lg font-black mt-1"
               />
             </div>
           </div>

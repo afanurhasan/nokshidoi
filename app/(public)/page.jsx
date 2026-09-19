@@ -8,6 +8,7 @@ import DeliveryRouteSection from '@/components/DeliveryRouteSection';
 import OurSpec from '@/components/OurSpec';
 import ReviewMarquee from '@/components/ReviewMarquee';
 import GallerySection from '@/components/GallerySection';
+import NoticeAndSupportSection from '@/components/NoticeAndSupportSection';
 import ContactSection from '@/components/ContactSection';
 
 export default function Home() {
@@ -33,6 +34,9 @@ export default function Home() {
 
       {/* ৮. ঐতিহ্যবাহী কারিগরির ফটো গ্যালারি */}
       <GallerySection />
+
+      {/* ৯. ব্র্যান্ড পরিচিতি, নিরাপত্তা ও গ্রাহক সহযোগিতা */}
+      <NoticeAndSupportSection />
 
       {/* ১০. যোগাযোগ ও শোরুম */}
       <ContactSection />

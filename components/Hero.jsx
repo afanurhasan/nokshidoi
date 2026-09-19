@@ -28,6 +28,13 @@ export default function Hero() {
               {BUSINESS_CONFIG.name}
             </h1>
 
+            {/* পূর্বে “দই ভান্ডার” পরিচিতি ব্যাজ */}
+            <div className="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100/90 text-amber-950 border border-amber-300 text-xs font-bold w-fit shadow-2xs">
+              <span>🏷️ পূর্বের নাম: “দই ভান্ডার”</span>
+              <span className="text-amber-500 font-black">•</span>
+              <span>সরকারি নিবন্ধনে এখন “নকশি দই ভান্ডার”</span>
+            </div>
+
             <div className="mt-5 space-y-3 text-base sm:text-lg text-slate-800 leading-relaxed font-medium text-justify">
               <p>
                 নকশি দই ভান্ডার বগুড়াভিত্তিক একটি দুগ্ধজাত খাদ্য উৎপাদন ও পাইকারি সরবরাহকারী প্রতিষ্ঠান। নিজস্ব কারখানায় দই, মিষ্টি, রসমালাই, মাঠা, ঘোল ও খাঁটি গাওয়া ঘিসহ বিভিন্ন খাদ্যপণ্য উৎপাদন করা হয়।

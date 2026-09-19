@@ -81,6 +81,7 @@ export default function Footer() {
               <li><Link href="/#products" className="hover:text-amber-400 transition">আমাদের পণ্য সম্ভার</Link></li>
               <li><Link href="/#order-process" className="hover:text-amber-400 transition">৫-ধাপের অর্ডার প্রসেস</Link></li>
               <li><Link href="/#delivery-routes" className="hover:text-amber-400 transition">প্যাসেঞ্জার বাস রুটসমূহ</Link></li>
+              <li><Link href="/#notices" className="hover:text-amber-400 transition">ব্র্যান্ড পরিচিতি ও সহায়তা</Link></li>
               <li><Link href="/#contact" className="hover:text-amber-400 transition">যোগাযোগ ও শোরুম</Link></li>
             </ul>
           </div>
