@@ -223,6 +223,11 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                       </strong>
                     </div>
                   )}
+
+                  {/* কার্টন মিক্সিং সংক্ষিপ্ত প্রম্পট */}
+                  <div className="pt-2 text-[11px] font-bold text-amber-900 flex items-center gap-1.5">
+                    <span>📦 ১টি কার্টনে সর্বোচ্চ ৩টি ভিন্ন আইটেম মিলিয়ে নেওয়ার সুবিধা রয়েছে।</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -244,6 +249,92 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 💡 প্রতিদিন সকাল ১০টার আগে অর্ডার নিশ্চিত করুন। ৩০% অগ্রিম সাপেক্ষে নিজস্ব কারখানায় প্রস্তুত করা হবে।
               </p>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* পাইকারি কার্টন মিক্সিং ও পেমেন্ট সংক্রান্ত জরুরি নির্দেশিকা */}
+      <div className="mt-8 sm:mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* কার্ড ১: এক কার্টনে ৩ আইটেম মিক্স করার নিয়ম */}
+        <div className="bg-gradient-to-b from-amber-50/70 via-white to-amber-50/40 rounded-3xl p-6 sm:p-7 border border-amber-200/90 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between gap-2 mb-4">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-200/80 text-amber-900 border border-amber-300">
+                <Package size={14} className="text-amber-800" />
+                <span>{BUSINESS_CONFIG.cartonMixPolicy.badge}</span>
+              </span>
+              <span className="text-[11px] font-bold text-amber-800 bg-white px-2 py-0.5 rounded-md border border-amber-200">
+                পাইকারি সুবিধা
+              </span>
+            </div>
+
+            <h3 className="text-lg sm:text-xl font-black text-slate-900 leading-snug">
+              {BUSINESS_CONFIG.cartonMixPolicy.title}
+            </h3>
+
+            <p className="text-xs sm:text-sm text-slate-700 mt-3 leading-relaxed font-medium">
+              {BUSINESS_CONFIG.cartonMixPolicy.ruleSummary}
+            </p>
+
+            {/* শর্ত বক্স */}
+            <div className="mt-4 p-3.5 bg-amber-100/70 rounded-2xl border border-amber-300 text-xs text-amber-950 font-bold leading-relaxed shadow-2xs">
+              <p>📌 {BUSINESS_CONFIG.cartonMixPolicy.condition}</p>
+            </div>
+
+            {/* স্পষ্টীকরণ বক্স */}
+            <div className="mt-4 p-3.5 bg-white rounded-2xl border border-amber-200/80 text-xs text-slate-700 leading-relaxed font-medium shadow-2xs">
+              <p className="text-slate-800">
+                <strong className="text-amber-900">💡 নিয়মাবলি: </strong>
+                {BUSINESS_CONFIG.cartonMixPolicy.clarification}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-5 pt-3 border-t border-amber-200/60 text-[11px] text-slate-500 font-medium text-center">
+            * অর্ডার করার সময় হোয়াটসঅ্যাপে পছন্দের ৩টি আইটেম ও অনুপাত উল্লেখ করুন।
+          </div>
+        </div>
+
+        {/* কার্ড ২: অর্ডার ও পেমেন্ট সংক্রান্ত জরুরি নোটিশ */}
+        <div className="bg-gradient-to-b from-rose-50/70 via-white to-amber-50/40 rounded-3xl p-6 sm:p-7 border border-rose-200 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between gap-2 mb-4">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-rose-100 text-rose-900 border border-rose-200">
+                <AlertTriangle size={14} className="text-rose-700" />
+                <span>{BUSINESS_CONFIG.orderPaymentNotice.badge}</span>
+              </span>
+              <span className="text-[11px] font-bold text-rose-800 bg-white px-2 py-0.5 rounded-md border border-rose-200">
+                জরুরি নোটিশ
+              </span>
+            </div>
+
+            <h3 className="text-lg sm:text-xl font-black text-slate-900 leading-snug">
+              {BUSINESS_CONFIG.orderPaymentNotice.title}
+            </h3>
+
+            <p className="text-xs sm:text-sm text-slate-700 mt-3 leading-relaxed font-medium">
+              {BUSINESS_CONFIG.orderPaymentNotice.ruleDescription}
+            </p>
+
+            {/* বাতিল ও সমন্বয় সতর্কতা বক্স */}
+            <div className="mt-4 p-4 bg-rose-50 rounded-2xl border border-rose-300 text-xs text-rose-950 font-bold leading-relaxed shadow-2xs">
+              <div className="flex items-start gap-2.5">
+                <AlertTriangle size={18} className="text-rose-700 shrink-0 mt-0.5" />
+                <span>{BUSINESS_CONFIG.orderPaymentNotice.forfeitDisclaimer}</span>
+              </div>
+            </div>
+
+            {/* পেমেন্ট সময়ানুবর্তিতা নোট */}
+            <div className="mt-4 p-3.5 bg-white rounded-2xl border border-rose-200/80 text-xs text-slate-700 leading-relaxed shadow-2xs">
+              <span className="font-extrabold text-rose-900 block mb-1">⏰ পেমেন্ট ও ডেলিভারি সময়বিধি:</span>
+              <p className="text-slate-600 font-medium">
+                অর্ডার নিশ্চিত করার পর পরবর্তী দিন গাড়ি ছাড়ার পূর্বে নির্ধারিত অবশিষ্ট ৭০% ও রোড ভাড়া পরিশোধ সম্পন্ন করুন।
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-5 pt-3 border-t border-rose-200/60 text-[11px] text-slate-500 font-medium text-center">
+            * পণ্য প্রস্তুতি ও তাজা সরবরাহ নিশ্চিত করার স্বার্থে এই নিয়ম প্রযোজ্য।
           </div>
         </div>
       </div>
