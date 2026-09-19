@@ -124,7 +124,7 @@ export default function Footer() {
         {/* কপিরাইট */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-stone-400 text-center sm:text-left font-medium">
           <p>
-            &copy; {currentYear} <strong>{BUSINESS_CONFIG.name}</strong>। সর্বস্বত্ব সংরক্ষিত।
+            &copy; <span className="font-mono">{currentYear}</span> <strong>{BUSINESS_CONFIG.name}</strong>। সর্বস্বত্ব সংরক্ষিত।
           </p>
           <p>
             {BUSINESS_CONFIG.motto}

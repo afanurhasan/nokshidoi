@@ -50,15 +50,41 @@ export default function ContactSection() {
                 <div className="size-12 rounded-xl bg-amber-50 text-amber-800 flex items-center justify-center shrink-0">
                   <CreditCard size={22} />
                 </div>
-                <div className="flex-1">
-                  <span className="text-[11px] font-extrabold text-amber-800 uppercase tracking-wider">অফিশিয়াল পেমেন্ট নম্বর</span>
-                  <h4 className="text-base font-black text-slate-900 mt-0.5">বিকাশ / নগদ পেমেন্ট</h4>
-                  <p className="text-xs text-slate-600 mt-0.5 font-medium">
-                    অর্ডারের ৩০% অগ্রিম ও বাকি ৭০% + বাস ভাড়া গাড়িতে তোলার আগে পরিশোধযোগ্য:
-                  </p>
-                  <span className="text-lg font-black text-slate-900 block mt-1.5 font-mono">
-                    {BUSINESS_CONFIG.paymentNumber}
-                  </span>
+                <div className="flex-1 space-y-3">
+                  <div>
+                    <span className="text-[11px] font-extrabold text-amber-800 uppercase tracking-wider">অফিশিয়াল পেমেন্ট নম্বর</span>
+                    <h4 className="text-base font-black text-slate-900 mt-0.5">বিকাশ, নগদ ও রকেট পেমেন্ট</h4>
+                    <p className="text-xs text-slate-600 mt-0.5 font-medium">
+                      অর্ডারের ৩০% অগ্রিম ও বাকি ৭০% + বাস ভাড়া গাড়িতে তোলার আগে পরিশোধযোগ্য:
+                    </p>
+                  </div>
+
+                  {/* পেমেন্ট নম্বর ১: অফিশিয়াল */}
+                  <div className="bg-amber-50/70 p-3 rounded-xl border border-amber-200/80 flex items-center justify-between gap-2">
+                    <div>
+                      <span className="text-[10px] font-extrabold text-amber-900 tracking-wide block">অফিশিয়াল নম্বর (বিকাশ / নগদ)</span>
+                      <span className="text-base sm:text-lg font-black text-slate-900 tracking-wider select-all font-mono">
+                        {BUSINESS_CONFIG.paymentNumber}
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-black px-2 py-0.5 rounded-md bg-amber-200 text-amber-900 shrink-0">
+                      অফিশিয়াল
+                    </span>
+                  </div>
+
+                  {/* পেমেন্ট নম্বর ২: পার্সোনাল */}
+                  <div className="bg-emerald-50/70 p-3 rounded-xl border border-emerald-200/80 flex items-center justify-between gap-2">
+                    <div>
+                      <span className="text-[10px] font-extrabold text-emerald-900 tracking-wide block">বিকাশ • নগদ • রকেট (পার্সোনাল)</span>
+                      <span className="text-base sm:text-lg font-black text-slate-900 tracking-wider select-all font-mono">
+                        {BUSINESS_CONFIG.personalPaymentNumber}
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-black px-2 py-0.5 rounded-md bg-emerald-200 text-emerald-900 shrink-0">
+                      পার্সোনাল
+                    </span>
+                  </div>
+
                   <p className="text-[11px] text-amber-900 mt-1 font-bold">
                     * পেমেন্টের পর স্ক্রিনশট বা শেষ ৪ ডিজিট WhatsApp-এ পাঠান।
                   </p>
@@ -126,6 +152,37 @@ export default function ContactSection() {
                 >
                   <MapPin size={13} className="text-red-600" />
                   <span>গুগল ম্যাপে শোরুম দেখুন</span>
+                </a>
+              </div>
+
+              {/* ইমেইল ও প্রাতিষ্ঠানিক যোগাযোগের বক্স */}
+              <div className="mt-5 p-4 bg-amber-50/60 rounded-xl border border-amber-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3.5">
+                  <div className="size-11 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 shadow-2xs">
+                    <Mail size={22} />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-extrabold text-amber-800 uppercase tracking-wider block">
+                      অফিশিয়াল ইমেইল ডেস্ক
+                    </span>
+                    <span className="text-xs text-slate-600 font-medium block">
+                      বাণিজ্যিক বা প্রাতিষ্ঠানিক অনুসন্ধানের জন্য ইমেইল করুন:
+                    </span>
+                    <a
+                      href={`mailto:${BUSINESS_CONFIG.email}`}
+                      className="text-sm sm:text-base font-black text-slate-900 hover:text-amber-800 transition font-mono mt-0.5 inline-block select-all"
+                    >
+                      {BUSINESS_CONFIG.email}
+                    </a>
+                  </div>
+                </div>
+
+                <a
+                  href={`mailto:${BUSINESS_CONFIG.email}`}
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold transition shadow-xs shrink-0"
+                >
+                  <Mail size={14} />
+                  <span>ইমেইল পাঠান</span>
                 </a>
               </div>
             </div>

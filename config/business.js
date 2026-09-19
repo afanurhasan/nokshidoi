@@ -21,9 +21,13 @@ export const BUSINESS_CONFIG = {
   whatsappNumber: "+8801778306512",
   whatsappNumberDisplay: "০১৭৭৮-৩০৬৫১২",
   paymentNumber: "০১৭৭৮-৩০৬৫১২",
+  paymentNumberRaw: "01778306512",
+  personalPaymentNumber: "০১৭৩৭-৫০৬৫১২",
+  personalPaymentNumberRaw: "01737506512",
+  personalPaymentMethods: "বিকাশ, নগদ, রকেট (পার্সোনাল)",
   showroomPhone: "01610-002970",
   showroomPhoneRaw: "01610002970",
-  email: "nokshidoivandar@gmail.com",
+  email: "nakshidoibhandar@gmail.com",
 
   // ঠিকানা
   showroomAddress: "কলেজ রোড, শেরপুর, বগুড়া",
@@ -39,10 +43,10 @@ export const BUSINESS_CONFIG = {
 
   // সোশ্যাল মিডিয়া লিংক
   socialLinks: {
-    facebook: "https://www.facebook.com/nokshidoi",
-    instagram: "https://www.instagram.com/nokshidoi",
-    tiktok: "https://www.tiktok.com/@nokshidoi",
-    youtube: "https://www.youtube.com/@nokshidoi",
+    facebook: "https://www.facebook.com/nakshidoibhandarofficial",
+    instagram: "https://www.instagram.com/nakshidoibhandarofficial",
+    tiktok: "https://www.tiktok.com/@nakshidoibhandarofficial",
+    youtube: "https://www.youtube.com/@nakshidoibhandarofficial",
     whatsapp: "https://wa.me/8801778306512",
   },
 
@@ -104,7 +108,7 @@ export const BUSINESS_CONFIG = {
       title: "৩০% অগ্রিম পেমেন্ট",
       subtitle: "অর্ডার কনফার্মেশন",
       description: "অর্ডার নিশ্চিত করতে মোট মূল্যের ৩০% অগ্রিম প্রদান করতে হবে। অগ্রিম পেমেন্ট ছাড়া অর্ডার প্রস্তুত করা হবে না।",
-      note: "পেমেন্ট নম্বর: ০১৭৭৮-৩০৬৫১২",
+      note: "পেমেন্ট নম্বর: ০১৭৭৮-৩০৬৫১২ অথবা পার্সোনাল: ০১৭৩৭-৫০৬৫১২ (বিকাশ, নগদ, রকেট পার্সোনাল)",
       icon: "Coins",
     },
     {

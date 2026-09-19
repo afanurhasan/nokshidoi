@@ -155,7 +155,7 @@ export default function QualityAndStandards() {
                   <span className="text-xs font-extrabold uppercase tracking-wider text-slate-700">
                     {item.condition}
                   </span>
-                  <span className="text-2xl font-black text-slate-900 mt-1">
+                  <span className="text-2xl font-black text-slate-900 mt-1 font-mono">
                     {item.duration}
                   </span>
                   <span className="text-[11px] text-slate-600 mt-2 font-medium">

@@ -62,7 +62,7 @@ export default function ProductCard({ product }) {
                   <span className="text-[10px] font-extrabold text-slate-500 block truncate">
                     {product.netWeightLabel || 'নিট ওজন'}
                   </span>
-                  <span className="text-xs font-black text-slate-900">{product.netWeight}</span>
+                  <span className="text-xs font-black text-slate-900 font-mono">{product.netWeight}</span>
                 </div>
               )}
               {product.grossWeight && (
@@ -70,13 +70,13 @@ export default function ProductCard({ product }) {
                   <span className="text-[10px] font-extrabold text-slate-500 block truncate">
                     {product.grossWeightLabel || 'মাটিসহ ওজন'}
                   </span>
-                  <span className="text-xs font-black text-slate-900">{product.grossWeight}</span>
+                  <span className="text-xs font-black text-slate-900 font-mono">{product.grossWeight}</span>
                 </div>
               )}
               {product.carton && (
                 <div className="bg-slate-50 p-2 rounded-xl border border-slate-200">
                   <span className="text-[10px] font-extrabold text-slate-500 block truncate">কার্টুন</span>
-                  <span className="text-xs font-black text-slate-900">{product.carton}</span>
+                  <span className="text-xs font-black text-slate-900 font-mono">{product.carton}</span>
                 </div>
               )}
               {product.minOrder && (
@@ -84,7 +84,7 @@ export default function ProductCard({ product }) {
                   <span className="text-[10px] font-extrabold text-slate-500 block truncate">
                     {product.minOrderLabel || 'সর্বনিম্ন অর্ডার'}
                   </span>
-                  <span className="text-xs font-black text-amber-800">{product.minOrder}</span>
+                  <span className="text-xs font-black text-amber-800 font-mono">{product.minOrder}</span>
                 </div>
               )}
             </div>
@@ -109,7 +109,7 @@ export default function ProductCard({ product }) {
                 <span className="text-[10px] font-bold text-slate-500 block uppercase">
                   খুচরা মূল্য
                 </span>
-                <span className="text-xs font-black text-slate-600 line-through">
+                <span className="text-xs font-black text-slate-600 line-through font-mono">
                   {product.retailPrice}
                 </span>
               </div>

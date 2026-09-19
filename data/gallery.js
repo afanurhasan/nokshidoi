@@ -1,15 +1,15 @@
 /**
  * গ্যালারি ছবির তালিকা (নকশি দই ভান্ডার)
- * Cloudinary থেকে সরাসরি আসল ৯টি ছবি
+ * Cloudinary থেকে সরাসরি আসল ১৪টি ছবি
  */
 export const GALLERY_IMAGES = [
   {
     id: 1,
-    image: 'https://res.cloudinary.com/rllqoooy/image/upload/v1789666219/g1.jpg',
+    image: 'https://res.cloudinary.com/rllqoooy/image/upload/g1.jpg',
   },
   {
     id: 2,
-    image: 'https://res.cloudinary.com/rllqoooy/image/upload/v1789666220/g2.jpg',
+    image: 'https://res.cloudinary.com/rllqoooy/image/upload/g2.jpg',
   },
   {
     id: 3,
@@ -38,5 +38,25 @@ export const GALLERY_IMAGES = [
   {
     id: 9,
     image: 'https://res.cloudinary.com/rllqoooy/image/upload/g9.jpg',
+  },
+  {
+    id: 10,
+    image: 'https://res.cloudinary.com/rllqoooy/image/upload/g10.jpg',
+  },
+  {
+    id: 11,
+    image: 'https://res.cloudinary.com/rllqoooy/image/upload/g11.jpg',
+  },
+  {
+    id: 12,
+    image: 'https://res.cloudinary.com/rllqoooy/image/upload/g12.jpg',
+  },
+  {
+    id: 13,
+    image: 'https://res.cloudinary.com/rllqoooy/image/upload/g13.jpg',
+  },
+  {
+    id: 14,
+    image: 'https://res.cloudinary.com/rllqoooy/image/upload/g14.jpg',
   },
 ];

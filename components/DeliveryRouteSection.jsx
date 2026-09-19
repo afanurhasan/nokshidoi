@@ -85,7 +85,7 @@ export default function DeliveryRouteSection() {
                 <span>বগুড়া টু সারাদেশ প্যাসেঞ্জার রুট</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-1">
-                প্রধান প্যাসেঞ্জার বাস রুটসমূহ ({routes.length}টি প্রধান পয়েন্ট)
+                প্রধান প্যাসেঞ্জার বাস রুটসমূহ (<span className="font-mono">{routes.length}</span>টি প্রধান পয়েন্ট)
               </h3>
               <p className="text-xs text-slate-600 mt-0.5 font-medium">
                 বগুড়া থেকে নির্ধারিত প্যাসেঞ্জার বাস রুটের মাধ্যমে দেশের বিভিন্ন অঞ্চলে পাইকারি পণ্য পাঠানো হয়।

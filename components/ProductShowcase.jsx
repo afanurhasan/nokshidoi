@@ -119,7 +119,7 @@ export default function ProductShowcase() {
               <span>{cat.icon}</span>
               <span>{cat.name}</span>
               <span
-                className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
                   selectedCategory === cat.id
                     ? 'bg-amber-950 text-amber-200'
                     : 'bg-slate-200 text-slate-600'
@@ -135,8 +135,8 @@ export default function ProductShowcase() {
       {/* ফলাফল সারসংক্ষেপ */}
       <div className="mt-4 flex items-center justify-between text-xs text-slate-500 px-1 font-medium">
         <span>
-          মোট <strong className="text-slate-900">{filteredProducts.length}</strong>টি পণ্যের মধ্যে{' '}
-          <strong className="text-slate-900">{displayedProducts.length}</strong>টি প্রদর্শিত হচ্ছে
+          মোট <strong className="text-slate-900 font-mono">{filteredProducts.length}</strong>টি পণ্যের মধ্যে{' '}
+          <strong className="text-slate-900 font-mono">{displayedProducts.length}</strong>টি প্রদর্শিত হচ্ছে
         </span>
         {searchQuery && (
           <span>

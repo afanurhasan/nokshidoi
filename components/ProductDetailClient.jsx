@@ -159,7 +159,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                         <Scale size={18} className="text-amber-700 shrink-0" />
                         <span>{product.netWeightLabel || 'নিট ওজন'}:</span>
                       </span>
-                      <strong className="text-slate-900 font-black text-base">{product.netWeight}</strong>
+                      <strong className="text-slate-900 font-black text-base font-mono">{product.netWeight}</strong>
                     </div>
                   )}
 
@@ -170,7 +170,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                         <Layers size={18} className="text-amber-700 shrink-0" />
                         <span>{product.grossWeightLabel || 'মাটিসহ ওজন'}:</span>
                       </span>
-                      <strong className="text-slate-900 font-black text-base">{product.grossWeight}</strong>
+                      <strong className="text-slate-900 font-black text-base font-mono">{product.grossWeight}</strong>
                     </div>
                   )}
 
@@ -194,7 +194,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                         <Receipt size={18} className="text-slate-500 shrink-0" />
                         <span>খুচরা মূল্য:</span>
                       </span>
-                      <span className="text-slate-700 font-bold text-base line-through">
+                      <span className="text-slate-700 font-bold text-base line-through font-mono">
                         {product.retailPrice}
                       </span>
                     </div>
@@ -207,7 +207,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                         <Package size={18} className="text-amber-700 shrink-0" />
                         <span>কার্টুন:</span>
                       </span>
-                      <strong className="text-slate-900 font-black text-base">{product.carton}</strong>
+                      <strong className="text-slate-900 font-black text-base font-mono">{product.carton}</strong>
                     </div>
                   )}
 
@@ -218,7 +218,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                         <Clock size={18} className="text-emerald-700 shrink-0" />
                         <span>{product.minOrderLabel || 'সর্বনিম্ন অর্ডার'}:</span>
                       </span>
-                      <strong className="text-emerald-900 font-black text-base sm:text-lg">
+                      <strong className="text-emerald-900 font-black text-base sm:text-lg font-mono">
                         {product.minOrder}
                       </strong>
                     </div>
